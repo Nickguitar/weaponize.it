@@ -1,0 +1,137 @@
+body{
+    background-color: #111;
+    font-family: 'Courier New', monospace;
+    display: block;
+    margin: 10;
+}
+
+h1 {
+	color: #fff;
+}
+
+h2, h3 {
+    color: #090;
+}
+
+.command {
+    background-color: #001e00;
+    color: #00cc00;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+}
+
+pre.code {
+    background-color: #001f00;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+    color: #fff; /* TODO: syntax highlight according to the language*/
+}
+
+small {
+    font-size: 90%;
+    color: #00cc00;
+}
+
+.description {
+	color: #aaa;
+}
+
+.separator {
+    border-top: 1px dashed #004400;
+    margin: 40px 0;
+}
+
+#jsonList{
+	width: 45%;
+	padding: 20px 0;
+	margin: auto;
+}
+
+#jsonList a{
+    text-decoration: none;
+}
+
+header{
+	display: flex;
+	align-items: center;
+    justify-content: center;
+}
+.header {
+	font-size: 20px;
+	color:#fff !important;
+	text-decoration: none;
+	text-align: left;
+}
+
+
+/* New styles for the menu */
+.menu {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+     color: #00cc00;
+}
+
+.menu a {
+    color: #00cc00;
+    text-decoration: none;
+	margin: 10px 20px 10px 20px;
+}
+
+.textbox-container {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin: 20px 0;
+}
+
+.custom-textbox {
+    padding: 10px;
+    margin: 0 40px 0 40px;
+    border: 1px solid #00cc00;
+    border-radius: 5px;
+    background-color: #001f00;
+    color: #00cc00;
+    width: 45%;
+}
+
+.not-found{
+	color: #a00;
+}
+
+.footer {
+	margin: 40px 0 0 0;
+    color: #aaa !important;
+    text-align: center;
+	display: block;
+    width: 100%;
+    justify-content: center;
+    line-height:20px;
+}
+
+.footer a{
+	color: #090;
+}
+
+h1 {
+    position: relative;
+}
+
+h1::after {
+    content: '\1F517'; /* Unicode for anchor icon */
+    font-size: 0.8em;
+    margin-left: 5px; /* Adjust the spacing between h1 and icon */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-block;
+    right: 0px; /* Adjust the distance from the right edge of h1 */
+    opacity: 0; /* Initially hide the icon */
+    transition: opacity 0.1s ease; /* Add a smooth transition effect */
+}
+
+h1:hover::after {
+    opacity: 0.5; /* Show the icon on hover */
+}

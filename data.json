@@ -1,0 +1,45 @@
+[
+	{
+		"title": "simple sample",
+		"description": "this is just a sample",
+		"data":{
+			"description 1": "!code command 1",
+			"descriptions 2": "command 2"
+		},
+		"tags": ["tag 1", "tag 2", "tag 3"],
+		"keywords": ["keyword 1", "keyword 2"]
+	},
+	{
+		"title": "second sample lol",
+		"description": "this is yet another sample",
+		"data":{
+			"description 1": "!code command 1",
+			"descriptions 2": "command 2"
+		},
+		"tags": ["tag 1", "tag 2", "tag 3"],
+		"keywords": ["keyword 1", "keyword 2"]
+	},
+	{
+		"title": "third sample ok",
+		"description": "",
+		"data":{
+			"description 1": "!code command 1",
+			"descriptions 2": "command 2"
+		},
+		"tags": ["tag 1", "tag 2", "tag 3"],
+		"keywords": ["keyword 1", "capeta"]
+	},
+	{
+		"title": "last sample until now",
+		"description": "alright this is the third one let's see what's going on here",
+		"data":{
+			"description 1": "!code command 1",
+			"description 2": "command 1",
+			"description 3": "!code command 1",
+			"descriptions 4": "command 2"
+		},
+		"tags": ["tag 1", "tag 2", "tag 3"],
+		"keywords": ["keyword 1", "keyword 2"]
+	}
+
+]
