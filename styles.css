@@ -22,16 +22,20 @@ h2, h3 {
 }
 
 pre.code {
-    background-color: #001f00;
+    background-color: #191919;
     padding: 10px;
     border-radius: 5px;
     overflow-x: auto;
     color: #fff; /* TODO: syntax highlight according to the language*/
 }
 
-small {
+small, small a {
     font-size: 90%;
-    color: #00cc00;
+    color: #006600;
+}
+
+small a:hover{
+	color: #009900;
 }
 
 .description {
@@ -44,7 +48,7 @@ small {
 }
 
 #jsonList{
-	width: 45%;
+	width: 50%;
 	padding: 20px 0;
 	margin: auto;
 }
@@ -94,7 +98,7 @@ header{
     border-radius: 5px;
     background-color: #001f00;
     color: #00cc00;
-    width: 45%;
+    width: 30%;
 }
 
 .not-found{
@@ -120,18 +124,96 @@ h1 {
 }
 
 h1::after {
-    content: '\1F517'; /* Unicode for anchor icon */
+    content: '\1F517';
     font-size: 0.8em;
-    margin-left: 5px; /* Adjust the spacing between h1 and icon */
+    margin-left: 5px;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     display: inline-block;
-    right: 0px; /* Adjust the distance from the right edge of h1 */
-    opacity: 0; /* Initially hide the icon */
-    transition: opacity 0.1s ease; /* Add a smooth transition effect */
+    right: 0px;
+    opacity: 0;
+    transition: opacity 0.1s ease;
 }
 
 h1:hover::after {
-    opacity: 0.5; /* Show the icon on hover */
+    opacity: 0.5;
 }
+
+
+
+/* Styles for syntax highlighting from highlight.js */
+
+
+
+pre code.hljs{
+    display:block;
+    overflow-x:auto;
+    padding:1em
+}
+code.hljs{
+    padding:3px 5px
+}
+.hljs{
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #141014;
+  border:solid 1px #050;
+  padding:20px;
+  padding-right:50px;
+  display: inline-block;
+  border-radius:5px;
+}
+.hljs ::selection,.hljs::selection{
+    background-color:#515151;
+    color:#ccc
+}
+.hljs-comment{
+    color:#999
+}
+.hljs-tag{
+    color:#b4b7b4
+}
+.hljs-operator,.hljs-punctuation,.hljs-subst{
+    color:#ccc
+}
+.hljs-operator{
+    opacity:.7
+}
+.hljs-bullet,.hljs-deletion,.hljs-name,.hljs-selector-tag,.hljs-template-variable,.hljs-variable{
+    color:#f2777a
+}
+.hljs-attr,.hljs-link,.hljs-literal,.hljs-number,.hljs-symbol,.hljs-variable.constant_{
+    color:#f99157
+}
+.hljs-class .hljs-title,.hljs-title,.hljs-title.class_{
+    color:#fc6
+}
+.hljs-strong{
+    font-weight:700;
+    color:#fc6
+}
+.hljs-addition,.hljs-code,.hljs-string,.hljs-title.class_.inherited__{
+    color:#9c9
+}
+.hljs-built_in,.hljs-doctag,.hljs-keyword.hljs-atrule,.hljs-quote,.hljs-regexp{
+    color:#6cc
+}
+.hljs-attribute,.hljs-function .hljs-title,.hljs-section,.hljs-title.function_,.ruby .hljs-property{
+    color:#69c
+}
+.diff .hljs-meta,.hljs-keyword,.hljs-template-tag,.hljs-type{
+    color:#c9c
+}
+.hljs-emphasis{
+    color:#c9c;
+    font-style:italic
+}
+.hljs-meta,.hljs-meta .hljs-keyword,.hljs-meta .hljs-string{
+    color:#a3685a
+}
+.hljs-meta .hljs-keyword,.hljs-meta-keyword{
+    font-weight:700
+}
+ 
