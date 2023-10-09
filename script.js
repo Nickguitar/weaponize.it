@@ -63,6 +63,11 @@ function displayJSON(jsonData){
 		    tagLink.href = `#tag:${safeUrl(tag)}`; 
 		    tagLink.innerText = tag;
 
+            tagLink.addEventListener('click', function () {
+            	console.log("filtering by: " + tag);
+                filterItemsByTag(tag);
+            });
+
 		    tagsSmall.appendChild(tagLink);
 		    if (index < data.tags.length - 1) {
 		        tagsSmall.appendChild(document.createTextNode(', '));
@@ -79,7 +84,16 @@ function displayJSON(jsonData){
 
         jsonListDiv.appendChild(jsonContainer);
     });
+
 }
+
+function filterItemsByTag(clickedTag) {
+	var containers = document.querySelectorAll('#jsonList > div');
+	containers.forEach(container => {
+		var tagsSmall = container.querySelector('small');
+		container.style.display = (tagsSmall && tagsSmall.innerText.includes(clickedTag)) ? 'block' : 'none';
+     });
+ }
 
 const placeholderTexts = ['pentest', 'malware analysis', 'network scan', 'subdomain', 'enumeration', 'information gathering', 'osint', 'wireshark', 'buffer overflow', 'binary exploitation', 'cryptography', 'obfuscation', 'privilege escalation', 'mobile pentest', 'android', 'malware', 'red team', 'steganography', 'phishing', 'post exploitation', 'social engineering', 'firewall evasion', 'metasploit', 'password cracking', 'reverse engineering', 'spyware', 'anti virus evasion', 'anti virus bypass', 'wi-fi cracking', 'wireless hacking', 'password spraying', 'container escaping', 'kerberoasting', 'pass the hash', 'pass the ticket', 'process injection', 'domain takeover', 'c2', 'shellcode', 'active directory', 'lateral movement', 'persistence', 'fuzzing', 'rainbow table', 'data exfiltration', 'honeypot', 'sql injection', 'cross-site scripting', 'xss', 'cross-site request forgery', 'server-side request forgery', 'command injection', 'owasp', 'xml external entities', 'path traversal', 'session hijacking', 'http smuggling', 'cache poisoning', 'arbitrary upload', 'reverse shell', 'webshell', 'rootkit'];
 
@@ -128,7 +142,6 @@ function handleTextbox() {
 
         var jsonListDiv = document.getElementById('jsonList');
         jsonListDiv.innerHTML = '';
-		console.log(filteredData);
 	
         if(filteredData.length !== 0){
 	        displayJSON(filteredData);
@@ -151,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function scrollToHash() {
     var hash = window.location.hash;
     if(hash){
-        var decodedHash = decodeURIComponent(hash);
+        var decodedHash = hash.split(":")[1];
         setTimeout(function () {
             var targetElement = document.querySelector(decodedHash);
             if(targetElement){
@@ -160,7 +173,10 @@ function scrollToHash() {
                     block: 'start'
                 });
             }
+			filterItemsByTag(decodedHash);
         }, 500);
+
+
     }
 }
 

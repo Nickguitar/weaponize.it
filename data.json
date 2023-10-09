@@ -6,7 +6,7 @@
 			"": "!bash cat files.txt | grep -aoP \"(?<=(\\\"|\\'|`))\\\/[a-zA-Z0-9?&=\\\/-#.](?=(\\\"|\\'|`))\" | sort -u | tee output.txt",
 			"Or, alternatively:": "!bash grep -aoP files.txt \"(?<=(\\\"|\\'|`))\\\/[a-zA-Z0-9?&=\\\/-#.](?=(\\\"|\\'|`))\" | sort -u | tee output.txt"
 		},
-		"tags": ["enumeration", "oneliner", "web"]
+		"tags": ["enumeration", "web", "api"]
 	},
 	{
 		"title": "List the last 10 files modified on a folder",
@@ -30,7 +30,7 @@
 		"data":{
 			"": "!php <?php\n\n$host = 'localhost';\n$username = 'your_username';\n$password = 'your_password';\n$database = 'your_database';\n\n$mysqli = new mysqli($host, $username, $password, $database);\n\nif ($mysqli->connect_error)\n    die(\"Connection failed: \" . $mysqli->connect_error);\n\necho \"Connected to MySQL. Type 'exit' to quit.\\n\";\n\nwhile(1){\n    $input = readline(\"mysql> \");\n    \n    if($input === 'exit')\n        break;\n\n    $result = $mysqli->query($input);\n\n    if(!$result)\n        echo \"Error: \" . $mysqli->error . \"\\n\";\n    else{\n        if($result->num_rows > 0){\n            while($row = $result->fetch_assoc())\n                print_r($row);\n        }else{\n            echo \"Query OK, \" . $mysqli->affected_rows . \" rows affected\\n\";\n        }\n        $result->free();\n    }        \n}\n\n$mysqli->close();\necho \"Exited MySQL shell.\\n\";"
 		},
-		"tags": ["web", "snippet", "PHP", "MySQL"]
+		"tags": ["web", "PHP", "MySQL"]
 	},
 	{
 		"title": "Read files/RCE with PHP wrappers",
@@ -107,5 +107,39 @@
 			"      ":"!bash frida --codeshare pbalmelle/android-ssl-bypass -f <com.example.app>"
 		},
 		"tags": ["mobile", "crypto", "android", "bypass"]
+	},
+	{
+		"title": "Android logcat",
+		"description": "Get adb logcat logs provided the application package name",
+		"data":{
+			"": "!bash #Usage: logcat com.example.app\nfunction logcat(){\r\n\tadb logcat | grep -F \"`adb shell ps | grep $1  | tr -s [:space:] ' ' | cut -d' ' -f2`\"\r\n}"
+		},
+		"tags": ["mobile", "android", "bash"]
+	},
+	{
+		"title": "Pull Android mobile app .apk from phone",
+		"description": "Extract the .apk from a mobile app provided the application package id",
+		"data":{
+			"": "!bash #usage: pull-apk <package id>\r\nfunction pull-apk(){\r\n\tpkg_name=$(adb shell pm list packages | cut -d: -f2 | grep $1)\r\n\tadb pull \"$(adb shell pm path $pkg_name | cut -d: -f2 | grep base)\"\r\n\tmv base.apk $pkg_name.apk &> \/dev\/null\r\n}"
+		},
+		"tags": ["mobile", "android", "apk", "bash"]
+	},
+	{
+		"title": "Repack Android app",
+		"description": "Repack an Android app, sign it an reinstall on the device",
+		"data":{
+			"": "!bash #Usage: repack extracted_folder\r\nfunction repack(){\r\n\tname=$(echo -n \"$1\" | sed \"s\/\\\/\/\/g\")\r\n\tpackage_name=$(grep \"package=\\\"\" \"${name}\/AndroidManifest.xml\"  | sed -E \"s\/.*package=\\\"([^\\\"]+)\\\".*\/\\1\/g\")\r\n \techo \"[*] Repacking...\"\r\n \tjava -jar \/opt\/apks\/apktool_2.6.1.jar b \"$1\" -o \"${name}.apk\"\r\n\techo -e  \"\\n[*] Signing...\"\r\n\tjava -jar \/opt\/apks\/uber-apk-signer-1.2.1.jar -a \"${name}.apk\" -o \"${name}_signed\"\r\n\tmv \"${name}_signed\/${name}-aligned-debugSigned.apk\" ${name}_signed.apk\r\n\trm -r \"${name}_signed\/\"\r\n\techo -e \"\\n[*] Uninstalling old $package_name...\"\r\n\tadb uninstall $package_name\r\n\techo -e \"\\n[*] Installing ${name}_signed.apk...\"\r\n\tadb install \"${name}_signed.apk\"\r\n}"
+		},
+		"tags": ["mobile", "android", "bash"]
+	},
+	{
+		"title": "CLI .NET decompiler",
+		"description": "Extract the source code (.cs) of a .NET binary",
+		"data":{
+			"": "!bash #Usage: ilspy example.exe\nfunction ilspy(){\r\n\tsudo docker run --rm -v `pwd`:\/samples cincan\/ilspy \/samples\/\"$1\" > `basename $1`.cs\r\n\techo `basename $1`.cs\r\n}"
+		},
+		"tags": ["reverse enginerring", ".NET"]
 	}
+
+	
 ]
