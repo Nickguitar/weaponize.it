@@ -11,7 +11,7 @@ All code snippets and techniques were found on the internet or submitted by the 
 ```
 git clone https://github.com/Nickguitar/weaponize.it
 cd weaponize.it
-docker build -t weaponize.it
+docker build -t weaponize.it .
 docker run -d -p 80:8000 --name weaponize.it -v src/:/usr/share/nginx/html/ weaponize.it
 ```
 
