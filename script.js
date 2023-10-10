@@ -40,8 +40,25 @@ function safeString(inputString) {
 
 function displayJSON(jsonData){
     var jsonListDiv = document.getElementById('jsonList');
-
+	isAbout = false;
     jsonData.forEach((data, index) => {
+    	if(data.tags[0] == "about" && window.location.hash == "#about"){
+	        var jsonContainer = document.createElement('div');
+	        jsonContainer.innerHTML = `<a href="#${safeUrl(data.title)}"><h1 id="${safeUrl(data.title)}">${safeString(data.title)}</h1></a>
+	                                   <h2>${safeString(data.description)}</h2>`;
+
+	        var dataDiv = document.createElement('div');
+	        Object.entries(data.data).forEach(([desc, data]) => {
+	            dataDiv.innerHTML += `<span class="description">${safeString(desc)}</span><p class='about'>${safeString(data)}</p>`;
+	        });
+
+	        jsonContainer.appendChild(dataDiv);
+			jsonListDiv.appendChild(jsonContainer);
+    		isAbout = true;
+    	}
+
+		if(isAbout || data.tags[0] == "about") return;
+    	
         var jsonContainer = document.createElement('div');
         jsonContainer.innerHTML = `<a href="#${safeUrl(data.title)}"><h1 id="${safeUrl(data.title)}">${safeString(data.title)}</h1></a>
                                    <h2>${safeString(data.description)}</h2>`;
@@ -64,7 +81,6 @@ function displayJSON(jsonData){
 		    tagLink.innerText = tag;
 
             tagLink.addEventListener('click', function () {
-            	console.log("filtering by: " + tag);
                 filterItemsByTag(tag);
             });
 
@@ -84,6 +100,8 @@ function displayJSON(jsonData){
 
         jsonListDiv.appendChild(jsonContainer);
     });
+
+	hljs.highlightAll();
 
 }
 
@@ -157,14 +175,19 @@ function handleTextbox() {
 
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    scrollToHash();
-});
+
+function about() {
+	window.location.hash="#about"
+	filterItemsByTag("about");
+	displayJSON(jsonData);
+};
+
 
 function scrollToHash() {
     var hash = window.location.hash;
     if(hash){
-        var decodedHash = hash.split(":")[1];
+        var decodedHash = hash;
+        console.log("scrolltohash(): "+decodedHash);
         setTimeout(function () {
             var targetElement = document.querySelector(decodedHash);
             if(targetElement){
@@ -173,13 +196,18 @@ function scrollToHash() {
                     block: 'start'
                 });
             }
-			filterItemsByTag(decodedHash);
+            if(hash.includes("tag:")){
+				filterItemsByTag(decodedHash);
+			}
         }, 500);
-
-
     }
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+	var errorMessage = document.getElementById('error-message');
+	errorMessage.style.display = 'none';
+    scrollToHash();
+});
 
 writeHeaderAndFooter();
 fetchJsonData();

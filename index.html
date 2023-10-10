@@ -7,11 +7,6 @@
 	    <link rel="stylesheet" href="styles.css">
 	    <link rel="stylesheet" href="tomorrow-night.css">
 	    <script src="highlight.min.js"></script>
-	    <script>
-			setTimeout(function () {
-				hljs.highlightAll();
-	        }, 600);
-        </script>
 	    <style>
 	</style>
 	</head>
@@ -23,14 +18,16 @@
 		</header>
 		
 	    <nav class="menu">
-		    <a href="/">Home</a> • <a href="#tags">Tags</a> • <a href="https://github.com/Nickguitar/weaponize.it">Github</a> • <a href="https://www.youtube.com/channel/UCb2p8a58RD9iSKClpOCKXCw">YouTube</a> • <a href="#about">About</a>
+		    <a href="/">Home</a> • <a href="#tags">Tags</a> • <a href="https://github.com/Nickguitar/weaponize.it" target="_blank">Github</a> • <a href="https://www.youtube.com/channel/UCb2p8a58RD9iSKClpOCKXCw" target="_blank">YouTube</a> • <a href="javascript:about()">About</a>
 	    </nav>
 
 	    <div class="textbox-container">
 	        <input type="text" class="custom-textbox">
 	    </div>
 		<div id="jsonList"></div>
-
+	    <div id="error-message">
+	        Error: JavaScript is disabled. Please enable JavaScript to use this website.
+	    </div>
 		<footer>
 			<pre><a class='footer'></a></pre>
 	    </footer>

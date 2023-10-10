@@ -140,7 +140,14 @@ h1:hover::after {
     opacity: 0.5;
 }
 
+.about{
+	color: #ccc;
+}
 
+ #error-message{
+ 	text-align: center;
+ 	color: #a00;
+ }
 
 /* Styles for syntax highlighting from highlight.js */
 
