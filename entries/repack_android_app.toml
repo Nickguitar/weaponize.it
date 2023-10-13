@@ -1,0 +1,27 @@
+title = "Repack Android app"
+description = "Repack an Android app, sign it an reinstall on the device"
+tags = ["mobile", "android", "bash"]
+
+[[data]]
+description = "First download both to /opt:"
+language = "bash"
+command = """curl -o /opt/ https://github.com/iBotPeaches/Apktool/releases/download/v2.6.1/apktool_2.6.1.jar https://github.com/patrickfav/uber-apk-signer/releases/download/v1.2.1/uber-apk-signer-1.2.1.jar"""
+
+[[data]]
+description = "Usage: repack <folder where apk was extracted to>"
+language = "bash"
+command = """function repack(){
+	name=$(echo -n "$1" | sed "s/\///g")
+	package_name=$(grep "package=\"" "${name}/AndroidManifest.xml"  | sed -E "s/.*package=\"([^\"]+)\".*/\1/g")
+ 	echo "[*] Repacking..."
+ 	java -jar /opt/apktool_2.6.1.jar b "$1" -o "${name}.apk"
+	echo -e  "\n[*] Signing..."
+	java -jar /opt/uber-apk-signer-1.2.1.jar -a "${name}.apk" -o "${name}_signed"
+	mv "${name}_signed/${name}-aligned-debugSigned.apk" ${name}_signed.apk
+	rm -r "${name}_signed/"
+	echo -e "\n[*] Uninstalling old $package_name..."
+	adb uninstall $package_name
+	echo -e "\n[*] Installing ${name}_signed.apk..."
+	adb install "${name}_signed.apk"
+}"""
+

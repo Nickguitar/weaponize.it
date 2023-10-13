@@ -1,0 +1,17 @@
+title = "CLI .NET decompiler"
+description = "Extract the source code (.cs) of a .NET binary"
+tags = ["rev", ".NET"]
+
+[[data]]
+description = "First download both to /opt:"
+language = "bash"
+command = """curl -o /opt/ https://github.com/iBotPeaches/Apktool/releases/download/v2.6.1/apktool_2.6.1.jar
+curl -o /opt/ https://github.com/patrickfav/uber-apk-signer/releases/download/v1.2.1/uber-apk-signer-1.2.1.jar"""
+
+[[data]]
+description = "Usage: ilspy example.exe"
+language = "bash"
+command = """function ilspy(){
+	sudo docker run --rm -v `pwd`:/samples cincan/ilspy /samples/"$1" > `basename $1`.cs
+	echo `basename $1`.cs
+}"""

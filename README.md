@@ -12,7 +12,7 @@ All code snippets and techniques were found on the internet or submitted by the 
 git clone https://github.com/Nickguitar/weaponize.it
 cd weaponize.it
 docker build -t weaponize.it .
-docker run -d -p 80:8000 --name weaponize.it -v src/:/usr/share/nginx/html/ weaponize.it
+docker run -d -p 80:8000 --name weaponize.it -v src:/usr/share/nginx/html/ weaponize.it
 ```
 
 Website will be available at 127.0.0.1:8000.
@@ -28,7 +28,8 @@ Using Weaponize.it, I can simply input keywords relevant to my desired informati
 - [x] Add "about" section
 - [ ] Add functionality to "tags" menu item
 - [ ] Make weaponize.it CLI-friendly
-- [ ] Figure out a way to receive contributions
+- [x] Figure out a way to receive contributions
 - [ ] Add a "source" section for each post
 - [ ] Add a copy button for the code snippets
 - [ ] Find a lighter syntax highlighting script
+- [ ] Migrate completely to aws s3

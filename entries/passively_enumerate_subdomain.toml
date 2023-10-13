@@ -1,0 +1,8 @@
+title = "Passively enumerate subdomains"
+description = "List subdomains based on SSL cerificates with crt.sh"
+tags = ["bash", "osint", "misc", "enum"]
+
+[[data]]
+description = "Substitute <URL>:"
+language = "bash"
+command = """curl -s "https://crt.sh/?q=<URL>" | tr '\n' , | grep -oi "<table>.*</table>" | sed "s/<TR>/\n/g" | cut -d , -f 6 | sed -E "s/(<[^>]*>|^ +|.*Logged At.*)//g" | sort | sort -u"""

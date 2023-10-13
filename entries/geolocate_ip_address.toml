@@ -1,0 +1,8 @@
+title = "Geolocate IP address"
+description = "Quickly get info about an IP address (country, city, provider, etc.)"
+tags = ["bash", "osint", "misc"]
+
+[[data]]
+description = "Substitute <IP ADDRESS>:"
+language = "bash"
+command = """curl -s http://ip-api.com/json/<IP ADDRESS> | jq"""

@@ -1,0 +1,13 @@
+title = "Extract all endpoints from a javascript file"
+description = ""
+tags = ["web", "LFI", "RCE"]
+
+[[data]]
+description = ""
+language = "bash"
+command = """cat files.txt | grep -aoP "(?<=(\"|\'|`))\/[a-zA-Z0-9?&=\/-#.](?=(\"|\'|`))" | sort -u | tee output.txt"""
+
+[[data]]
+description = "Or, alternatively:"
+language = "bash"
+command = """grep -aoP files.txt "(?<=(\"|\'|`))\/[a-zA-Z0-9?&=\/-#.](?=(\"|\'|`))" | sort -u | tee output.txt"""

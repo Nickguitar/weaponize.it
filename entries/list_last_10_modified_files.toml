@@ -1,0 +1,8 @@
+title = "List the last 10 files modified on a folder"
+description = ""
+tags = ["linux", "forensics"]
+
+[[data]]
+description = ""
+language = "bash"
+command = """find $1 -type f -exec stat --format '%Y :%y %n' "{}" \; | sort -nr | cut -d: -f2- | head"""

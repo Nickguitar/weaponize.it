@@ -1,0 +1,10 @@
+title = "Android logcat"
+description = "Get adb logcat logs provided the application package name"
+tags = ["mobile", "android", "bash"]
+
+[[data]]
+description = "Usage: logcat com.example.app"
+language = "bash"
+command = """function logcat(){
+	adb logcat | grep -F "`adb shell ps | grep $1  | tr -s [:space:] ' ' | cut -d' ' -f2`"
+}"""

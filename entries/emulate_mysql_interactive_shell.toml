@@ -1,0 +1,44 @@
+title = "Emulate a MySQL interactive shell"
+description = "PHP script to emulate a MySQL interactive shell in a host. Use it if there is no MySQL client available."
+tags = ["web", "PHP", "MySQL"]
+
+[[data]]
+description = ""
+language = "php"
+command = """<?php
+
+$host = 'localhost';
+$username = 'your_username';
+$password = 'your_password';
+$database = 'your_database';
+
+$mysqli = new mysqli($host, $username, $password, $database);
+
+if ($mysqli->connect_error)
+    die("Connection failed: " . $mysqli->connect_error);
+
+echo "Connected to MySQL. Type 'exit' to quit.\n";
+
+while(1){
+    $input = readline("mysql> ");
+    
+    if($input === 'exit')
+        break;
+
+    $result = $mysqli->query($input);
+
+    if(!$result)
+        echo "Error: " . $mysqli->error . "\n";
+    else{
+        if($result->num_rows > 0){
+            while($row = $result->fetch_assoc())
+                print_r($row);
+        }else{
+            echo "Query OK, " . $mysqli->affected_rows . " rows affected\n";
+        }
+        $result->free();
+    }        
+}
+
+$mysqli->close();
+echo "Exited MySQL shell.\n";"""

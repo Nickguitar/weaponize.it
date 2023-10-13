@@ -1,0 +1,38 @@
+title = "SSL pinning bypass on Android app"
+description = "Overwrite a file's content 40 times with random patterns, permanently erasing it"
+tags = ["mobile", "crypto", "android", "bypass"]
+
+[[data]]
+description = "Substitute <com.example.app>:"
+language = "bash"
+command = """frida --codeshare akabe1/frida-multiple-unpinning -f <com.example.app>"""
+
+[[data]]
+description = ""
+language = "bash"
+command = """frida --codeshare pcipolloni/universal-android-ssl-pinning-bypass-with-frida -f <com.example.app>"""
+
+[[data]]
+description = ""
+language = "bash"
+command = """frida --codeshare Eltion/instagram-ssl-pinning-bypass -f <com.example.app>"""
+
+[[data]]
+description = ""
+language = "bash"
+command = """frida --codeshare sowdust/universal-android-ssl-pinning-bypass-2 -f <com.example.app>"""
+
+[[data]]
+description = ""
+language = "bash"
+command = """frida --codeshare masbog/frida-android-unpinning-ssl -f <com.example.app>"""
+
+[[data]]
+description = ""
+language = "bash"
+command = """frida --codeshare akabe1/frida-universal-pinning-bypasser -f <com.example.app>"""
+
+[[data]]
+description = ""
+language = "bash"
+command = """frida --codeshare pbalmelle/android-ssl-bypass -f <com.example.app>"""

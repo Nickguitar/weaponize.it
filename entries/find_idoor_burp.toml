@@ -1,0 +1,7 @@
+title = "Find potential IDOR on BurpSuite"
+description = ""
+tags = ["web", "IDOR"]
+
+[[data]]
+description = "Filter by search term (with regex) on Burp's proxy tab:"
+command = """(?i)\b\w*id\b(?!\w)\s*=\s*("[^"]*"|'[^']*'|[^&\s}]*)"""

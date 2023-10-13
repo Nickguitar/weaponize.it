@@ -1,0 +1,19 @@
+title = "Extract shell code from object file"
+description = "Bash function to get a file.o and return the corresponding shellcode"
+tags = ["pwn", "misc", "bash"]
+
+[[data]]
+description = ""
+language = "bash"
+command = """function obj2sh(){
+    objdump -d -M intel-mnemonic "$1" | \
+    grep '[0-9a-f]:'|\
+    grep -v 'file'|\
+    cut -f2 -d:|\
+    cut -f1-6 -d' '|\
+    tr -s ' '|\
+    tr '\t' ' '|\
+    sed 's/ $//g'|\
+    sed 's/ /\\x/g'|\
+    paste -d '' -s
+}"""

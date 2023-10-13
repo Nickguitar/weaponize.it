@@ -19,7 +19,7 @@ async function fetchJsonData() {
     try {
         var response = await fetch('data.json');
         jsonData = await response.json();
-        displayJSON(jsonData);
+        displayJSON(jsonData.reverse());
     } catch (error) {
         console.error('Error fetching JSON data:', error);
     }
@@ -58,17 +58,17 @@ function displayJSON(jsonData){
     	}
 
 		if(isAbout || data.tags[0] == "about") return;
-    	
         var jsonContainer = document.createElement('div');
         jsonContainer.innerHTML = `<a href="#${safeUrl(data.title)}"><h1 id="${safeUrl(data.title)}">${safeString(data.title)}</h1></a>
                                    <h2>${safeString(data.description)}</h2>`;
 
         var dataDiv = document.createElement('div');
-        Object.entries(data.data).forEach(([desc, data]) => {
-            var lang = data.match(/^!([^\s]+)/);
-            lang = lang ? lang[1] : "text";
-			data = data.replace(/^![^\s]+ */i, "");
-            dataDiv.innerHTML += `<span class="description">${safeString(desc)}</span><pre><code class="language-${lang}">${safeString(data)}</code></pre>`;
+        Object.entries(data.data).forEach(([description, data, language]) => {
+            var lang = data.language;
+            lang = lang ? lang : "text";
+			data.command = data.command.replace(/^![^\s]+ */i, "");
+
+            dataDiv.innerHTML += `<span class="description">${safeString(data.description)}</span><pre><code class="language-${lang}">${safeString(data.command)}</code></pre>`;
         });
         jsonContainer.appendChild(dataDiv);
 
