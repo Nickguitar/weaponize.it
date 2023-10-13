@@ -1,3 +1,7 @@
+:root {
+  color-scheme: dark;
+}
+
 body{
     background-color: #111;
     font-family: 'Courier New', monospace;
@@ -48,9 +52,9 @@ small a:hover{
 }
 
 #jsonList{
-	width: 50%;
+/*	width: 50%; */
 	padding: 20px 0;
-	margin: auto;
+	margin: 0 auto;
 }
 
 #jsonList a{
@@ -58,12 +62,13 @@ small a:hover{
 }
 
 header{
+	font-size:1.3vw;
 	display: flex;
 	align-items: center;
     justify-content: center;
 }
 .header {
-	font-size: 20px;
+	font-family: courier new, monospace;
 	color:#fff !important;
 	text-decoration: none;
 	text-align: left;
@@ -75,7 +80,8 @@ header{
     align-items: center;
     justify-content: center;
     display: flex;
-     color: #00cc00;
+    color: #00cc00;
+    flex-wrap: wrap;
 }
 
 .menu a {
@@ -98,7 +104,7 @@ header{
     border-radius: 5px;
     background-color: #001f00;
     color: #00cc00;
-    width: 30%;
+    width: 450px;
 }
 
 .not-found{
@@ -148,6 +154,12 @@ h1:hover::after {
  	text-align: center;
  	color: #a00;
  }
+
+.container{
+	margin: 0 auto;
+	width: 80%;
+	max-width: 900px;
+}
 
 /* Styles for syntax highlighting from highlight.js */
 

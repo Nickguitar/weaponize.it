@@ -17,10 +17,18 @@ docker run -d -p 80:8000 --name weaponize.it -v src/:/usr/share/nginx/html/ weap
 
 Website will be available at 127.0.0.1:8000.
 
+# Why
+
+Quite often, in the midst of my pentests or during CTFs, I find myself in the search for a script I used ages ago, or I end up scrolling through numerous commands in the terminal history, attempting to recall what I need, or navigating through a cluster of 10 cheatsheets just to find that one specific command.
+
+Using Weaponize.it, I can simply input keywords relevant to my desired information into the search bar, and the results are practically instantaneously provided.
+
 # TODO:
 - [x] Add tags functionality
 - [x] Add "about" section
 - [ ] Add functionality to "tags" menu item
 - [ ] Make weaponize.it CLI-friendly
 - [ ] Figure out a way to receive contributions
-- [ ] Add an "author" section for each post
+- [ ] Add a "source" section for each post
+- [ ] Add a copy button for the code snippets
+- [ ] Find a lighter syntax highlighting script

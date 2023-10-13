@@ -93,7 +93,7 @@
 		"title": "Extract shell code from object file",
 		"description": "Bash function to get a file.o and return the corresponding shellcode",
 		"data":{
-			"": "!bash function obj2sh(){\r\n    objdump -d -M intel-mnemonic \"$1\" | \\\r\n    grep '[0-9a-f]:'|\\\r\n    grep -v 'file'|\\\r\n    cut -f2 -d:|\\\r\n    cut -f1-6 -d' '|\\\r\n    tr -s ' '|\\\r\n    tr '\\t' ' '|\\\r\n    sed 's\/ $\/\/g'|\\\r\n    sed 's\/ \/\\\\x\/g'|\\\r\n    paste -d '' -s\r\n}"
+			"Usage: obs2sh file.o": "!bash function obj2sh(){\r\n    objdump -d -M intel-mnemonic \"$1\" | \\\r\n    grep '[0-9a-f]:'|\\\r\n    grep -v 'file'|\\\r\n    cut -f2 -d:|\\\r\n    cut -f1-6 -d' '|\\\r\n    tr -s ' '|\\\r\n    tr '\\t' ' '|\\\r\n    sed 's\/ $\/\/g'|\\\r\n    sed 's\/ \/\\\\x\/g'|\\\r\n    paste -d '' -s\r\n}"
 		},
 		"tags": ["pwn", "misc", "bash"]
 	},
@@ -101,7 +101,7 @@
 		"title": "Set 'none' as a JWT algorythm",
 		"description": "Get a JWT and returns it with 'none' as its algorythm, and without signature",
 		"data":{
-			"": "!bash function jwtnonefy(){\r\n   header=$(echo \"$1\" | \\\r\n          cut -d. -f1 | \\\r\n          base64 -d | \\\r\n          sed -E \"s\/\\\"alg\\\":\\\"([^\\\"]+)\\\"\/\\\"alg\\\":\\\"none\\\"\/g\" | \\\r\n          base64 | \\\r\n          sed 's\/=\/\/g');\r\n   payload=$(echo \"$1\" | cut -d. -f 2);\r\n   echo -e \"\\n\"$header.$payload.\r\n}"
+			"Usage: jwtnonefy \"JWT\"": "!bash function jwtnonefy(){\r\n   header=$(echo \"$1\" | \\\r\n          cut -d. -f1 | \\\r\n          base64 -d | \\\r\n          sed -E \"s\/\\\"alg\\\":\\\"([^\\\"]+)\\\"\/\\\"alg\\\":\\\"none\\\"\/g\" | \\\r\n          base64 | \\\r\n          sed 's\/=\/\/g');\r\n   payload=$(echo \"$1\" | cut -d. -f 2);\r\n   echo -e \"\\n\"$header.$payload.\r\n}"
 		},
 		"tags": ["bash", "jwt", "web", "bug bounty"]
 	},
@@ -123,7 +123,7 @@
 		"title": "Android logcat",
 		"description": "Get adb logcat logs provided the application package name",
 		"data":{
-			"": "!bash #Usage: logcat com.example.app\nfunction logcat(){\r\n\tadb logcat | grep -F \"`adb shell ps | grep $1  | tr -s [:space:] ' ' | cut -d' ' -f2`\"\r\n}"
+			"Usage: logcat com.example.app": "!bash function logcat(){\r\n\tadb logcat | grep -F \"`adb shell ps | grep $1  | tr -s [:space:] ' ' | cut -d' ' -f2`\"\r\n}"
 		},
 		"tags": ["mobile", "android", "bash"]
 	},
@@ -131,7 +131,7 @@
 		"title": "Pull Android mobile app .apk from phone",
 		"description": "Extract the .apk from a mobile app provided the application package id",
 		"data":{
-			"": "!bash #usage: pull-apk <package id>\r\nfunction pull-apk(){\r\n\tpkg_name=$(adb shell pm list packages | cut -d: -f2 | grep $1)\r\n\tadb pull \"$(adb shell pm path $pkg_name | cut -d: -f2 | grep base)\"\r\n\tmv base.apk $pkg_name.apk &> \/dev\/null\r\n}"
+			"Usage: pull-apk <package id>": "!bash function pull-apk(){\r\n\tpkg_name=$(adb shell pm list packages | cut -d: -f2 | grep $1)\r\n\tadb pull \"$(adb shell pm path $pkg_name | cut -d: -f2 | grep base)\"\r\n\tmv base.apk $pkg_name.apk &> \/dev\/null\r\n}"
 		},
 		"tags": ["mobile", "android", "apk", "bash"]
 	},
@@ -139,7 +139,7 @@
 		"title": "Repack Android app",
 		"description": "Repack an Android app, sign it an reinstall on the device",
 		"data":{
-			"": "!bash #First download both to \/opt:\r\ncurl -o \/opt\/ https:\/\/github.com\/iBotPeaches\/Apktool\/releases\/download\/v2.6.1\/apktool_2.6.1.jar\r\ncurl -o \/opt\/ https:\/\/github.com\/patrickfav\/uber-apk-signer\/releases\/download\/v1.2.1\/uber-apk-signer-1.2.1.jar\r\n\r\n#Usage: repack <folder where apk was extracted to>\r\nfunction repack(){\r\n\tname=$(echo -n \"$1\" | sed \"s\/\\\/\/\/g\")\r\n\tpackage_name=$(grep \"package=\\\"\" \"${name}\/AndroidManifest.xml\"  | sed -E \"s\/.*package=\\\"([^\\\"]+)\\\".*\/\\1\/g\")\r\n \techo \"[*] Repacking...\"\r\n \tjava -jar \/opt\/apktool_2.6.1.jar b \"$1\" -o \"${name}.apk\"\r\n\techo -e  \"\\n[*] Signing...\"\r\n\tjava -jar \/opt\/uber-apk-signer-1.2.1.jar -a \"${name}.apk\" -o \"${name}_signed\"\r\n\tmv \"${name}_signed\/${name}-aligned-debugSigned.apk\" ${name}_signed.apk\r\n\trm -r \"${name}_signed\/\"\r\n\techo -e \"\\n[*] Uninstalling old $package_name...\"\r\n\tadb uninstall $package_name\r\n\techo -e \"\\n[*] Installing ${name}_signed.apk...\"\r\n\tadb install \"${name}_signed.apk\"\r\n}"
+			"Usage: repack <folder where apk was extracted to>": "!bash #First download both to \/opt:\r\ncurl -o \/opt\/ https:\/\/github.com\/iBotPeaches\/Apktool\/releases\/download\/v2.6.1\/apktool_2.6.1.jar\r\ncurl -o \/opt\/ https:\/\/github.com\/patrickfav\/uber-apk-signer\/releases\/download\/v1.2.1\/uber-apk-signer-1.2.1.jar\r\n\r\nfunction repack(){\r\n\tname=$(echo -n \"$1\" | sed \"s\/\\\/\/\/g\")\r\n\tpackage_name=$(grep \"package=\\\"\" \"${name}\/AndroidManifest.xml\"  | sed -E \"s\/.*package=\\\"([^\\\"]+)\\\".*\/\\1\/g\")\r\n \techo \"[*] Repacking...\"\r\n \tjava -jar \/opt\/apktool_2.6.1.jar b \"$1\" -o \"${name}.apk\"\r\n\techo -e  \"\\n[*] Signing...\"\r\n\tjava -jar \/opt\/uber-apk-signer-1.2.1.jar -a \"${name}.apk\" -o \"${name}_signed\"\r\n\tmv \"${name}_signed\/${name}-aligned-debugSigned.apk\" ${name}_signed.apk\r\n\trm -r \"${name}_signed\/\"\r\n\techo -e \"\\n[*] Uninstalling old $package_name...\"\r\n\tadb uninstall $package_name\r\n\techo -e \"\\n[*] Installing ${name}_signed.apk...\"\r\n\tadb install \"${name}_signed.apk\"\r\n}"
 		},
 		"tags": ["mobile", "android", "bash"]
 	},
@@ -147,7 +147,7 @@
 		"title": "CLI .NET decompiler",
 		"description": "Extract the source code (.cs) of a .NET binary",
 		"data":{
-			"": "!bash #Usage: ilspy example.exe\nfunction ilspy(){\r\n\tsudo docker run --rm -v `pwd`:\/samples cincan\/ilspy \/samples\/\"$1\" > `basename $1`.cs\r\n\techo `basename $1`.cs\r\n}"
+			"Usage: ilspy example.exe": "!bash function ilspy(){\r\n\tsudo docker run --rm -v `pwd`:\/samples cincan\/ilspy \/samples\/\"$1\" > `basename $1`.cs\r\n\techo `basename $1`.cs\r\n}"
 		},
 		"tags": ["reverse enginerring", ".NET"]
 	}
