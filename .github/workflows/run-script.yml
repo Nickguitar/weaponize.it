@@ -27,12 +27,7 @@ jobs:
       run: npm install toml
 
     - name: Run Script for Each File
-      run: |
-        for file in entries/*; do
-          if [ -f "$file" ]; then
-            node toml2json.js "$file" > /tmp/output.json
-          fi
-        done
+      run: node toml2json.js
 
     - name: Upload to S3
       uses: aws-actions/configure-aws-credentials@v2
