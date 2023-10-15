@@ -1,0 +1,13 @@
+title = "Encrypt and decrypt files"
+description = "Quickly encrypt/decrypt files with AES256"
+tags = ["crypto", "misc"]
+
+[[data]]
+description = "Encrypt (substitute <FILE>):"
+language = "bash"
+command = """openssl enc -aes-256-cbc -md sha3-512 -pbkdf2 -in <FILE> > output.enc"""
+
+[[data]]
+description = "Decrypt (substitute <FILE.enc>):"
+language = "bash"
+command = """openssl enc -aes-256-cbc -md sha3-512 -pbkdf2 -D -in <FILE.enc>"""
