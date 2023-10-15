@@ -3,7 +3,7 @@ name: Convert .toml to json
 on:
   push:
     branches:
-      - toml
+      - main
 
 jobs:
   run-script:
