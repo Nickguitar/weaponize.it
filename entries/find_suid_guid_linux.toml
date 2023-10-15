@@ -1,0 +1,13 @@
+title = "Find activated SUID and GUID permissions"
+description = ""
+tags = ["linux", "misc"]
+
+[[data]]
+description = "List files with activated SUID bit"
+language = "bash"
+command = """find / -user root -perm -4000 2>/dev/null -exec ls -ldb {} \;"""
+
+[[data]]
+description = "List files with activated GUID bit"
+language = "bash"
+command = """find / -user root -perm -2000 2>/dev/null -exec ls -ldb {} \;"""
