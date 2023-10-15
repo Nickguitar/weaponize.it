@@ -1,5 +1,5 @@
 title = "SSL pinning bypass on Android app"
-description = "Overwrite a file's content 40 times with random patterns, permanently erasing it"
+description = ""
 tags = ["mobile", "crypto", "android", "bypass"]
 
 [[data]]
