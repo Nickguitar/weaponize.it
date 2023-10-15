@@ -17,7 +17,7 @@ function writeHeaderAndFooter(){
 var jsonData;
 async function fetchJsonData() {
     try {
-        var response = await fetch('data.json');
+        var response = await fetch('https://weaponize.s3.us-east-2.amazonaws.com/output.json');
         jsonData = await response.json();
         displayJSON(jsonData.reverse());
     } catch (error) {
@@ -74,8 +74,7 @@ function displayJSON(jsonData){
 
 		var tagsSmall = document.createElement('small');
 		tagsSmall.innerHTML = 'Tags: ';
-
-		data.tags.forEach((tag, index) => {
+		data.tags.sort().forEach((tag, index) => {
 		    var tagLink = document.createElement('a');
 		    tagLink.href = `#tag:${safeUrl(tag)}`; 
 		    tagLink.innerText = tag;
