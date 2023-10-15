@@ -5,4 +5,4 @@ tags = ["bash", "osint", "misc", "enum"]
 [[data]]
 description = "Substitute <URL>:"
 language = "bash"
-command = """curl -s "https://crt.sh/?q=<URL>" | tr '\n' , | grep -oi "<table>.*</table>" | sed "s/<TR>/\n/g" | cut -d , -f 6 | sed -E "s/(<[^>]*>|^ +|.*Logged At.*)//g" | sort | sort -u"""
+command = """curl -s 'https://crt.sh/?q=<URL>&output=json' | jq -r ".[].name_value" | sort -u"""
