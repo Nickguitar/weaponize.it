@@ -18,8 +18,9 @@ var jsonData;
 async function fetchJsonData() {
     try {
         var response = await fetch('https://weaponize.s3.us-east-2.amazonaws.com/output.json');
+//        var response = await fetch('output.json');
         jsonData = await response.json();
-        displayJSON(jsonData.reverse());
+        displayJSON(jsonData);
     } catch (error) {
         console.error('Error fetching JSON data:', error);
     }
@@ -51,11 +52,10 @@ function displayJSON(jsonData){
 
 	        for(i=0;i<data.data.length;i++){
 	        	if(data.data[i].language == "Why?"){
-	        		console.log("sim " + i)
 		            dataDiv.innerHTML += `<h1>${safeString(data.data[i].language)}</h1>`;
 	        	}
 	            dataDiv.innerHTML += `<p class='about'>${(data.data[i].description)}</p>`;
-	       }
+	        }
 
 	        jsonContainer.appendChild(dataDiv);
 			jsonListDiv.appendChild(jsonContainer);
