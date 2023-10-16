@@ -26,6 +26,9 @@ jobs:
     - name: Install Dependencies
       run: npm install toml
 
+    - name: Check files modification date
+      run: ls -ltr entries
+
     - name: Run Script for Each File
       run: node toml2json.js | tee /tmp/output.json
 
