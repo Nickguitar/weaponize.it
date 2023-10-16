@@ -9,7 +9,7 @@ function writeHeaderAndFooter(){
 "                      |_|";
 
 	var footer = "Nicholas Ferreira - 2023\n"+
-	"Inspiration: <a href='https://ippsec.rocks/' target='_blank'>IppSec</a>";
+	"Inspired by <a href='https://ippsec.rocks/' target='_blank'>IppSec</a>";
 	document.getElementsByClassName("header")[0].innerHTML = header;
 	document.getElementsByClassName("footer")[0].innerHTML = footer;
 }
@@ -48,9 +48,14 @@ function displayJSON(jsonData){
 	                                   <h2>${safeString(data.description)}</h2>`;
 
 	        var dataDiv = document.createElement('div');
-	        Object.entries(data.data).forEach(([desc, data]) => {
-	            dataDiv.innerHTML += `<span class="description">${safeString(desc)}</span><p class='about'>${safeString(data)}</p>`;
-	        });
+
+	        for(i=0;i<data.data.length;i++){
+	        	if(data.data[i].language == "Why?"){
+	        		console.log("sim " + i)
+		            dataDiv.innerHTML += `<h1>${safeString(data.data[i].language)}</h1>`;
+	        	}
+	            dataDiv.innerHTML += `<p class='about'>${(data.data[i].description)}</p>`;
+	       }
 
 	        jsonContainer.appendChild(dataDiv);
 			jsonListDiv.appendChild(jsonContainer);
@@ -186,7 +191,6 @@ function scrollToHash() {
     var hash = window.location.hash;
     if(hash){
         var decodedHash = hash;
-        console.log("scrolltohash(): "+decodedHash);
         setTimeout(function () {
             var targetElement = document.querySelector(decodedHash);
             if(targetElement){

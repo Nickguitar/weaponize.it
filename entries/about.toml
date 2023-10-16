@@ -1,0 +1,26 @@
+title = "About"
+description = ""
+tags = ["about"]
+
+[[data]]
+description = "Weaponize.it is your go-to resource for gaining insights into ethical hacking, pentesting, bug bounty hunting, and scripting. Explore a curated collection of powerful and practical tips and tricks related to cybersecurity, programming, and system exploitation."
+language = ""
+
+[[data]]
+description = "The website was designed to provide you a collection of guides, one-liners, cheatsheets and code snippets to make your life as a hacker easier. Quickly search for keywords and find what suits you best."
+language = ""
+
+[[data]]
+description = "Join us on GitHub and feel free to contribute with your own scripts, one-liners, functions or techniques."
+language = ""
+command = ""
+
+[[data]]
+description = "Quite often, in the midst of my pentests or during CTFs, I find myself in the search for a script I used ages ago, or I end up scrolling through numerous commands in the terminal history, attempting to recall what I need, or navigating through a cluster of 10 cheatsheets just to find that one specific command."
+language = "Why?"
+command = ""
+
+[[data]]
+description = "Using Weaponize.it, I can simply input keywords relevant to my desired information into the search bar, and instantaneously search through community-contributed data."
+language = ""
+command = ""

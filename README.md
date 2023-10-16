@@ -49,7 +49,8 @@ docker run -d -p 80:8000 --name weaponize.it -v src:/usr/share/nginx/html/ weapo
 
 Website will be available at 127.0.0.1:8000.
 
-# TODO:
+# This project is still under development
+## TODO:
 - [x] Add tags functionality
 - [x] Add "about" section
 - [ ] Add functionality to "tags" menu item
@@ -60,3 +61,5 @@ Website will be available at 127.0.0.1:8000.
 - [ ] Find a lighter syntax highlighting script
 - [ ] Migrate completely to aws s3 (go serverless)
 - [ ] Automatize pull and commit of generated json
+- [ ] Fix the timestamps of uploaded toml files
+- [ ] Find a way to track tags better
