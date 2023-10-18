@@ -26,8 +26,31 @@ jobs:
     - name: Install Dependencies
       run: npm install toml
 
-    - name: Check files modification date
-      run: ls -ltr entries
+    - name: Prepend current timestamp to filename and commit it
+      run: |
+        folder_path="files"
+        current_timestamp=$(date +"%s")
+        files=$(ls "$folder_path")
+        has_changed=false
+        for file in $files; do
+            if [[ ! $file =~ ^[0-9]+_ ]]; then
+                new_filename="${current_timestamp}_${file}"
+                mv "${folder_path}/${file}" "${folder_path}/${new_filename}"
+                echo "Prepended timestamp to: ${file} --> ${new_filename}"
+                has_changed=true
+            fi
+        done
+        if [ "$has_changed" = true ]; then
+            git config --global user.email "no-reply@github.com"
+            git config --global user.name "GitHub Actions"
+            git add .
+            git commit -m "Added entries"
+            git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+            git push
+        fi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
     - name: Run Script for Each File
       run: node toml2json.js | tee /tmp/output.json

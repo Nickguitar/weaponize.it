@@ -2,7 +2,7 @@ const fs = require('fs');
 const toml = require('toml');
 
 // Get the directory path from the command-line arguments
-const directory = 'entries' //process.argv[2];
+const directory = 'entries'; // process.argv[2];
 
 // Read the contents of the specified directory
 fs.readdir(directory, (err, files) => {
@@ -20,9 +20,8 @@ fs.readdir(directory, (err, files) => {
       return { file, stat };
     });
 
-
-  // Process each file in the directory in the sorted order
-  fileInfos.sort((a, b) => a.stat.mtime.getTime() - b.stat.mtime.getTime());
+  // Process each file in the directory in alphabetical order
+  fileInfos.sort((a, b) => a.file.localeCompare(b.file));
   const results = fileInfos.map(fileInfo => {
     const filePath = `${directory}/${fileInfo.file}`;
     const tomlContent = fs.readFileSync(filePath, 'utf8');
