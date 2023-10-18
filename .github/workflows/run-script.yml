@@ -28,7 +28,7 @@ jobs:
 
     - name: Prepend current timestamp to filename and commit it
       run: |
-        folder_path="files"
+        folder_path="entries"
         current_timestamp=$(date +"%s")
         files=$(ls "$folder_path")
         has_changed=false
