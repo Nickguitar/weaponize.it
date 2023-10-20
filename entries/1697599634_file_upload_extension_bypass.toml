@@ -1,6 +1,7 @@
 title = "File upload extension bypass"
 description = "Modify the file extension and bypass filters on file uploads"
 tags = ["web", "upload", "RCE", "bypass"]
+source = []
 
 [[data]]
 description = "Alternative PHP extensions:"

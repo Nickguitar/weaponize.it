@@ -19,6 +19,7 @@ Each toml file in the entries folder corresponds to an entry on Weaponize.it. Th
 title = "Title of the entry"
 description = "Brief description of the entry"
 tags = ["tag1", "tag2"]
+source = "https://example.com/source.html"
 
 [[data]]
 description = "Description about the command below"
@@ -28,16 +29,17 @@ command = """echo 'the command itself'"""
 
 ### Guidelines for submissions
 1. Ensure that the fields `title`, `tags`, and `command` are filled out, as they are mandatory.
-2. While optional, you can include additional information in the `description` and `language` fields.
-3. Keep the `title` and `description` and the toml filename concise for clarity and brevity.
-4. The toml filename should have underscores (_) as spaces.
-5. Consider existing `tags` when selecting appropriate tags for your submission.
-6. Utilize multiple `[[data]]` fields if you have more than one command to share.
-7. The `language` field should either be left empty or contain a language supported by [highlight.js](https://highlightjs.org/download).
-8. The `command` field is capable of multiline entries for comprehensive detailing.
-9. Characters in the `command` field do not require escaping.
-10. The contents of the submitted file can be modified before being approved.
-11. Check the already existing [entries](/entries) and use them as template if needed.
+2. While optional, you can include additional information in the `description`, `source` and `language` fields.
+3. When adding a source, make sure the field `source` is composed of valid URLs.
+4. Keep the `title` and `description` and the toml filename concise for clarity and brevity.
+5. The toml filename should have underscores (_) as spaces.
+6. Consider existing `tags` when selecting appropriate tags for your submission.
+7. Utilize multiple `[[data]]` fields if you have more than one command to share.
+8. The `language` field should either be left empty or contain a language supported by [highlight.js](https://highlightjs.org/download).
+9. The `command` field is capable of multiline entries for comprehensive detailing.
+10. Characters in the `command` field do not require escaping.
+11. The contents of the submitted file can be modified before being approved.
+12. Check the already existing [entries](/entries) and use them as template if needed.
 
 # Run Weaponize.it locally
 ```
@@ -56,10 +58,11 @@ Website will be available at 127.0.0.1:8000.
 - [ ] Add functionality to "tags" menu item
 - [ ] ~~Make weaponize.it CLI-friendly~~
 - [x] Figure out a way to receive contributions
-- [ ] Add a "source" section for each post
-- [ ] Add a copy button for the code snippets
+- [x] Add a "source" section for each post
+- [x] Add a copy button for the code snippets
 - [ ] Find a lighter syntax highlighting script
 - [ ] Migrate completely to aws s3 (go serverless)
-- [ ] Automatize pull and commit of generated json
-- [ ] Fix the timestamps of uploaded toml files
+- [x] Automatize pull and commit of generated json
+- [x] Fix the timestamps of uploaded toml files
 - [ ] Find a way to track tags better
+- [ ] Make a "preview post" for .toml files

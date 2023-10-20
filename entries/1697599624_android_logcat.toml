@@ -1,6 +1,7 @@
 title = "Android logcat"
 description = "Get adb logcat logs provided the application package name"
 tags = ["mobile", "android", "bash"]
+source = []
 
 [[data]]
 description = "Usage: logcat com.example.app"

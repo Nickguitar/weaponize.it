@@ -53,7 +53,7 @@ jobs:
 
 
     - name: Run Script for Each File
-      run: node toml2json.js | tee /tmp/output.json
+      run: node toml2json.js | tee src/output.json
 
     - name: Upload to S3
       uses: aws-actions/configure-aws-credentials@v2
@@ -63,4 +63,4 @@ jobs:
         aws-region: us-east-2 
 
     - name: Upload Results to S3
-      run: aws s3 cp /tmp/output.json s3://weaponize/
+      run: aws s3 cp src/output.json s3://weaponize/

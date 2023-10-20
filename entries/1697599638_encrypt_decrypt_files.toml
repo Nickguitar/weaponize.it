@@ -1,6 +1,7 @@
 title = "Encrypt and decrypt files"
 description = "Quickly encrypt/decrypt files with AES256"
 tags = ["crypto", "misc"]
+source = []
 
 [[data]]
 description = "Encrypt (substitute <FILE>):"

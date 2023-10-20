@@ -1,6 +1,7 @@
 title = "Extract all endpoints from a javascript file"
 description = ""
 tags = ["web", "LFI", "RCE"]
+source = []
 
 [[data]]
 description = ""

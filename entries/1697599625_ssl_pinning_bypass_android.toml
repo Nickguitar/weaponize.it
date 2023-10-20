@@ -1,6 +1,7 @@
 title = "SSL pinning bypass on Android app"
 description = ""
 tags = ["mobile", "crypto", "android", "bypass"]
+source = []
 
 [[data]]
 description = "Substitute <com.example.app>:"

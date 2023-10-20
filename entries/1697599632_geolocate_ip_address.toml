@@ -1,6 +1,7 @@
 title = "Geolocate IP address"
 description = "Quickly get info about an IP address (country, city, provider, etc.)"
 tags = ["bash", "osint", "misc"]
+source = []
 
 [[data]]
 description = "Substitute <IP ADDRESS>:"

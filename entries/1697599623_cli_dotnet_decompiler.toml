@@ -1,6 +1,7 @@
 title = "CLI .NET decompiler"
 description = "Extract the source code (.cs) of a .NET binary"
 tags = ["rev", ".NET"]
+source = []
 
 [[data]]
 description = "First download both to /opt:"

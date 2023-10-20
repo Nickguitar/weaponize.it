@@ -1,6 +1,7 @@
 title = "Repack Android app"
 description = "Repack an Android app, sign it an reinstall on the device"
 tags = ["mobile", "android", "bash"]
+source = []
 
 [[data]]
 description = "First download both to /opt:"

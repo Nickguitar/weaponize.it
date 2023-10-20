@@ -1,6 +1,7 @@
 title = "Find potential IDOR on BurpSuite"
 description = ""
 tags = ["web", "IDOR"]
+source = ["https://twitter.com/Moblig_/status/1684273682296758274"]
 
 [[data]]
 description = "Filter by search term (with regex) on Burp's proxy tab:"

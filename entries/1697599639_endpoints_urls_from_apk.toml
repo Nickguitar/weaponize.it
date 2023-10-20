@@ -1,8 +1,15 @@
 title = "Extract endpoints and URLs from Android apk"
 description = ""
 tags = ["enum", "android"]
+source = []
 
 [[data]]
 description = "Substitute <app.apk>:"
 language = "bash"
 command = """apktool d <app.apk>; cd app;mkdir collection; find . -name \*.smali -exec sh -c "cp {} collection/\$(head /dev/urandom | md5 | cut -d' ' -f1).smali" \;; linkfinder -i 'collection/*.smali' -o cli"""
+
+[[data]]
+description = "Other method:"
+language = "bash"
+command = """# Download https://github.com/n0mi1k/apk2url (also download required dependencies)
+./apk2url.sh <app.apk>"""

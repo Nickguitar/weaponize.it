@@ -1,6 +1,7 @@
 title = "Find activated SUID and GUID permissions"
 description = ""
 tags = ["linux", "misc"]
+source = []
 
 [[data]]
 description = "List files with activated SUID bit"

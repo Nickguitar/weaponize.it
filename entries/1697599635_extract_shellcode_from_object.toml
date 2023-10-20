@@ -1,6 +1,7 @@
 title = "Extract shell code from object file"
 description = "Bash function to get a file.o and return the corresponding shellcode"
 tags = ["pwn", "misc", "bash"]
+source = ["https://www.commandlinefu.com/commands/view/6051/get-all-shellcode-on-binary-file-from-objdump"]
 
 [[data]]
 description = ""

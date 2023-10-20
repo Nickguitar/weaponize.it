@@ -1,6 +1,7 @@
 title = "Pull Android mobile app .apk from phone"
 description = "Extract the .apk from a mobile app provided the application package id"
 tags = ["mobile", "android", "bash", "apk"]
+source = []
 
 [[data]]
 description = "Usage: pull-apk <package id>:"

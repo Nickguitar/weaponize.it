@@ -17,8 +17,8 @@ function writeHeaderAndFooter(){
 var jsonData;
 async function fetchJsonData() {
     try {
-        var response = await fetch('https://weaponize.s3.us-east-2.amazonaws.com/output.json');
-//        var response = await fetch('output.json');
+//        var response = await fetch('https://weaponize.s3.us-east-2.amazonaws.com/output.json');
+        var response = await fetch('output.json');
         jsonData = await response.json();
         displayJSON(jsonData);
     } catch (error) {
@@ -28,7 +28,8 @@ async function fetchJsonData() {
 
 function safeUrl(str) {
     str = str.toLowerCase().replace(/\s+/g, '-');
-    str = str.toLowerCase().replace('?', '');      
+    str = str.toLowerCase().replace('?', '');
+    str = str.toLowerCase().replace('/', '-');  
     return safeString(str);
 }
 
@@ -76,6 +77,23 @@ function displayJSON(jsonData){
             dataDiv.innerHTML += `<span class="description">${safeString(data.description)}</span><div class='code-wrapper'><pre><code class="language-${lang}">${safeString(data.command)}</code></pre><svg class='copy-icon' xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z" fill="#060"/></svg><div class='copied'>Copied</div></div>`;
         });
         jsonContainer.appendChild(dataDiv);
+
+		if(data.source){
+			console.log(data.source.length)
+			var source = document.createElement('small');
+			if(data.source.length == 1){
+				source.innerHTML = `<p><a class='source' href='${safeString(data.source[0])}' target='_blank'>Source</a></p>`;
+			}else{
+				source.innerHTML = `Sources: `
+				for(i=0;i<data.source.length;i++){
+					source.innerHTML += `<a class='source' href='${safeString(data.source[i])}' target='_blank'>${i+1}</a>`;
+					if(i != data.source.length-1)
+						source.innerHTML += `, `;
+				}
+				source.innerHTML += `<br>`
+			}
+			jsonContainer.appendChild(source);
+		}
 
 		var tagsSmall = document.createElement('small');
 		tagsSmall.innerHTML = 'Tags: ';

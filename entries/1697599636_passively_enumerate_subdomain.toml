@@ -1,6 +1,7 @@
 title = "Passively enumerate subdomains"
 description = "List subdomains based on SSL cerificates with crt.sh"
 tags = ["bash", "osint", "misc", "enum"]
+source = []
 
 [[data]]
 description = "Substitute <URL>:"

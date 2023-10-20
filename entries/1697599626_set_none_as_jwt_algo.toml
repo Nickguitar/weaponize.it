@@ -1,6 +1,7 @@
 title = "Set 'none' as a JWT algorythm"
 description = "Get a JWT and returns it with 'none' as its algorythm, and without signature"
 tags = ["jwt", "web", "bash", "bug bounty"]
+source = []
 
 [[data]]
 description = ""

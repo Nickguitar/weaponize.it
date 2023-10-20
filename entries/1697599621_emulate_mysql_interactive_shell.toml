@@ -1,6 +1,7 @@
 title = "Emulate a MySQL interactive shell"
 description = "PHP script to emulate a MySQL interactive shell in a host. Use it if there is no MySQL client available."
 tags = ["web", "PHP", "MySQL"]
+source = []
 
 [[data]]
 description = ""
