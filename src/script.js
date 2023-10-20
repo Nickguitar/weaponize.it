@@ -17,8 +17,8 @@ function writeHeaderAndFooter(){
 var jsonData;
 async function fetchJsonData() {
     try {
-        var response = await fetch('https://weaponize.s3.us-east-2.amazonaws.com/output.json');
-//        var response = await fetch('output.json');
+//        var response = await fetch('https://weaponize.s3.us-east-2.amazonaws.com/output.json');
+        var response = await fetch('output.json');
         jsonData = await response.json();
         displayJSON(jsonData);
     } catch (error) {
@@ -43,7 +43,7 @@ function safeString(inputString) {
 function displayJSON(jsonData){
     var jsonListDiv = document.getElementById('jsonList');
 	isAbout = false;
-    jsonData.forEach((data, index) => {
+    jsonData.reverse().forEach((data, index) => {
     	if(data.tags[0] == "about" && window.location.hash == "#about"){
 	        var jsonContainer = document.createElement('div');
 	        jsonContainer.innerHTML = `<a href="#${safeUrl(data.title)}"><h1 id="${safeUrl(data.title)}">${safeString(data.title)}</h1></a>
@@ -78,8 +78,7 @@ function displayJSON(jsonData){
         });
         jsonContainer.appendChild(dataDiv);
 
-		if(data.source){
-			console.log(data.source.length)
+		if(data.source.length){
 			var source = document.createElement('small');
 			if(data.source.length == 1){
 				source.innerHTML = `<p><a class='source' href='${safeString(data.source[0])}' target='_blank'>Source</a></p>`;
