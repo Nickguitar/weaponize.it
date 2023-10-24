@@ -199,7 +199,7 @@ function handleTextbox() {
         jsonListDiv.innerHTML = '';
 	
         if(filteredData.length !== 0){
-	        displayJSON(filteredData);
+	        displayJSON(filteredData.reverse());
         }else{
         	document.getElementById('jsonList').innerHTML = "<span class='not-found'>No results found.</span>";
         }

