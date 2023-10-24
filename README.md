@@ -19,7 +19,7 @@ Each toml file in the entries folder corresponds to an entry on Weaponize.it. Th
 title = "Title of the entry"
 description = "Brief description of the entry"
 tags = ["tag1", "tag2"]
-source = "https://example.com/source.html"
+source = ["https://example.com/source.html"]
 
 [[data]]
 description = "Description about the command below"
@@ -33,13 +33,14 @@ command = """echo 'the command itself'"""
 3. When adding a source, make sure the field `source` is composed of valid URLs.
 4. Keep the `title` and `description` and the toml filename concise for clarity and brevity.
 5. The toml filename should have underscores (_) as spaces.
-6. Consider existing `tags` when selecting appropriate tags for your submission.
-7. Utilize multiple `[[data]]` fields if you have more than one command to share.
-8. The `language` field should either be left empty or contain a language supported by [highlight.js](https://highlightjs.org/download).
-9. The `command` field is capable of multiline entries for comprehensive detailing.
-10. Characters in the `command` field do not require escaping.
-11. The contents of the submitted file can be modified before being approved.
-12. Check the already existing [entries](/entries) and use them as template if needed.
+6. The timestamp at the beginning of the filename is added automatically.
+7. Consider existing `tags` when selecting appropriate tags for your submission.
+8. Utilize multiple `[[data]]` fields if you have more than one command to share.
+9. The `language` field should either be left empty or contain a language supported by [highlight.js](https://highlightjs.org/download).
+10. The `command` field is capable of multiline entries for comprehensive detailing.
+11. Characters in the `command` field do not require escaping.
+12. The contents of the submitted file can be modified before being approved.
+13. Check the already existing [entries](/entries) and use them as template if needed.
 
 # Run Weaponize.it locally
 ```
