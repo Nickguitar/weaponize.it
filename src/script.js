@@ -17,8 +17,8 @@ function writeHeaderAndFooter(){
 var jsonData;
 async function fetchJsonData() {
     try {
-//        var response = await fetch('https://weaponize.s3.us-east-2.amazonaws.com/output.json');
-        var response = await fetch('output.json');
+        var response = await fetch('https://weaponize.s3.us-east-2.amazonaws.com/output.json');
+//        var response = await fetch('output.json');
         jsonData = await response.json();
         displayJSON(jsonData);
     } catch (error) {
