@@ -78,7 +78,7 @@ function displayJSON(jsonData) {
         });
         jsonContainer.appendChild(dataDiv);
 
-        if (data.source.length) {
+        if (data.source.length && data.source[0] !== "") {
             var source = document.createElement('p');
             source.className = "source";
             if (data.source.length == 1) {
