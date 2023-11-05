@@ -56,7 +56,7 @@ Website will be available at 127.0.0.1:8000.
 ## TODO:
 - [x] Add tags functionality
 - [x] Add "about" section
-- [ ] Add functionality to "tags" menu item
+- [x] Add functionality to "tags" menu item
 - [ ] ~~Make weaponize.it CLI-friendly~~
 - [x] Figure out a way to receive contributions
 - [x] Add a "source" section for each post
@@ -65,5 +65,5 @@ Website will be available at 127.0.0.1:8000.
 - [ ] Migrate completely to aws s3 (go serverless)
 - [x] Automatize pull and commit of generated json
 - [x] Fix the timestamps of uploaded toml files
-- [ ] Find a way to track tags better
+- [x] Find a way to track tags better
 - [ ] Make a "preview post" for .toml files
