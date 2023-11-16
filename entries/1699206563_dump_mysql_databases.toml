@@ -25,3 +25,14 @@ zip -r dumps.zip ${path}/*.sql
 rm -fr $path
 
 echo 'Saved dumps at dumps.zip'"""
+
+[[data]]
+description = "Change host, username, password and database name and run it. It will dump all tables and create csv files for each table. Additionally you can zip the folder"
+language = "bash"
+command = """
+wget https://raw.githubusercontent.com/pedroferreiraa/DatabaseTableDumper/main/dump.php
+
+# Running script
+
+php dump.php --help
+"""
