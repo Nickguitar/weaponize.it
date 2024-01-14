@@ -1,0 +1,14 @@
+title = "Quickly setting up a HTTPS server for data exfiltration"
+description = "Prevent browsers from blocking requests to your host when exfiltrating data via XSS"
+tags = ["web", "xss", "linux", "xss"]
+source = []
+
+[[data]]
+description = "Modern browsers follow the mixed content blocking policy, which stops loading HTTP content on HTTPS pages to protect security. With stunnel you can quickly add TLS functionality to your webserver and be able to receive connections from scripts running on HTTPS websites."
+language = "bash"
+command = """pacman -S stunnel glibc lib32-glibc # or apt, or others depending on distro
+cp /etc/stunnel/stunnel.conf-sample /etc/stunnel/stunnel.conf
+openssl req -new -x509 -days 365 -nodes -out /etc/stunnel/stunnel.pem -keyout /etc/stunnel/stunnel.pem
+python -m http.server 8080
+# or, alternatively, php -S 0.0.0.0:8080
+sudo stunnel3 -d 443 -r 8080 -p /etc/stunnel/stunnel.pem"""
