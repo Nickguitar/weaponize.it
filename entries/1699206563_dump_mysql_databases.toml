@@ -1,10 +1,10 @@
 title = "Dump all MySQL databases from server"
 description = ""
-tags = ["MySQL", "web"]
+tags = ["MySQL", "web", "exfiltration"]
 source = [""]
 
 [[data]]
-description = "Change user and password and run it. Databases will be zipped to dumps.zip, ready to be exfiltrated."
+description = "Bash script. Change user and password and run it. Databases will be zipped to dumps.zip, ready to be exfiltrated."
 language = "bash"
 command = """#!/bin/bash
 
@@ -27,7 +27,7 @@ rm -fr $path
 echo 'Saved dumps at dumps.zip'"""
 
 [[data]]
-description = "Change host, username, password and database name and run it. It will dump all tables and create csv files for each table. Additionally you can zip the folder"
+description = "PHP Script. Change host, username, password and database name and run it. It will dump all tables and create csv files for each table. Additionally you can zip the folder"
 language = "bash"
 command = """
 wget https://raw.githubusercontent.com/pedroferreiraa/DatabaseTableDumper/main/dump.php
