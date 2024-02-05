@@ -1,6 +1,6 @@
 title = "Quickly setting up a HTTPS server for data exfiltration"
 description = "Prevent browsers from blocking requests to your host when exfiltrating data via XSS"
-tags = ["web", "xss", "linux", "xss"]
+tags = ["web", "xss", "linux"]
 source = []
 
 [[data]]
