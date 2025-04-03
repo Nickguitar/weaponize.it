@@ -1,0 +1,45 @@
+title = "Subdomain enumeration tools"
+description = "Different tools to get subdomains from a domain"
+tags = ["bash", "osint", "misc", "enum"]
+source = ["https://github.com/blacklanternsecurity/bbot", "https://github.com/six2dez/reconftw", "https://github.com/1989shack/SDomDiscover", "https://github.com/m8sec/subscraper", "https://github.com/A-poc/RedTeam-Tools?tab=readme-ov-file#crtsh---httprobe---eyewitness"]
+
+[[data]]
+description = "Using bbot"
+language = "bash"
+command = """bbot -t example.com -p subdomain-enum"""
+
+[[data]]
+description = "Or passive sources only:"
+language = "bash"
+command = """bbot -t target.com -p subdomain-enum -rf passive"""
+
+[[data]]
+description = "Using reconFTW:"
+language = "bash"
+command = """./reconftw.sh -d target.com -r"""
+
+[[data]]
+description = "Using SDomDiscover to dump the valid domains in the SSL certificate:"
+language = "bash"
+command = """python3 SDomDiscover.py -d target.com"""
+
+[[data]]
+description = "Using SubScraper to find subdomains:"
+language = "bash"
+command = """python3 subscraper.py -d example.com -resolve -http -module-only
+python3 subscraper.py -d example.com -cname -m none -o sub_report.csv -csv"""
+
+[[data]]
+description = "crt.sh -> httprobe -> EyeWitness"
+language = "bash"
+command = """# Passively collects a list of subdomains from certificate associations (crt.sh)
+# Actively requests each subdomain to verify it's existence (httprobe)
+# Actively screenshots each subdomain for manual review (EyeWitness)
+# You must have httprobe, pup and EyeWitness installed and change 'target.com to the target domain. You are able to run this script concurrently in terminal windows if you have multiple target root domains
+
+domain=target.com;rand=$RANDOM;curl -fsSL "https://crt.sh/?q=${domain}" | pup 'td text{}' | grep "${domain}" | sort -n | uniq | httprobe > /tmp/enum_tmp_${rand}.txt; python3 /usr/share/eyewitness/EyeWitness.py -f /tmp/enum_tmp_${rand}.txt --web"""
+
+[[data]]
+description = "Quick subdomain scan with findomain and output to file:"
+language = "bash"
+command = """findomain -t target.com -u found_subdomains.txt"""
